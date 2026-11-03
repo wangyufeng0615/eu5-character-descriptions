@@ -1,0 +1,8 @@
+# License scope
+
+- Tools, tests and technical documentation: **MIT**, see `LICENSES/MIT.txt`.
+- The English character biographies and their Simplified Chinese versions: **CC BY-SA 4.0**, see `LICENSES/CC-BY-SA-4.0.txt` and https://creativecommons.org/licenses/by-sa/4.0/.
+
+The biography licence covers the `en` and `zh` fields of `data/bios.jsonl` and the resulting `cb_bio_*` values in the built localization files. Credit the **Descriptions for Every Historical Character contributors**, keep the per-character source links in `sources/sources.jsonl`, say what you changed, and share adaptations under CC BY-SA 4.0 or a compatible licence.
+
+The biographies are AI-assisted summaries written from the consulted sources, mostly Wikipedia in English and the local language; they are not copies of those pages or of official EU5 text. The licences grant only what the contributors can grant. Facts, character IDs and other interoperability identifiers are not claimed. Paradox game files (including the vanilla character tooltip templates this mod extends), trademarks and third-party material are not relicensed. The cover and thumbnail were generated for this project with an AI image model and are not covered by either licence. See `CREDITS.md`.

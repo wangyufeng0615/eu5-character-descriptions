@@ -1,0 +1,29 @@
+[h1]A biography for every historical character[/h1]
+
+Vanilla EU5 tells you a character's traits and stats, but not who they were.
+
+This mod adds an English and Chinese biography to [b]7,757[/b] historical characters: rulers, consorts, heirs, their ancestors and the people of the game's events. Hover over a character's portrait and the biography appears at the bottom of the tooltip.
+
+[list]
+[*]English and Chinese in one mod
+[*]Biographies follow the person's real life: origins, key years, what they did and how they died
+[*]Only adds text; no gameplay changes
+[*]Can be added to an existing save
+[/list]
+
+Every biography is written from published sources, mainly Wikipedia in English and the local language, matched to the game's character by family, dates and titles, and reviewed entry by entry. Where little is known about a person, the biography is short rather than invented. If you find a mistake, please leave a comment with the character's name. I'll keep maintaining and updating this mod!
+
+[h2]Good to know[/h2]
+[list]
+[*]Characters created by events without a fixed ID, and randomly generated characters, have no biography.
+[*]Mods that replace the character tooltip may hide the biography block.
+[*]Biographies tell the person's real life and do not change with what happens in your game.
+[/list]
+
+[h2]Planned updates[/h2]
+Support the other official EU5 languages.
+
+[h2]Update history[/h2]
+[list]
+[*]1.0.0: First public release.
+[/list]

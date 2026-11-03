@@ -1,4 +1,4 @@
-﻿# Character Biographies (test): vanilla Character_tooltip and dead_character_tooltip from
+﻿# Descriptions for Every Historical Character: vanilla Character_tooltip and dead_character_tooltip from
 # in_game/gui/shared/character_tooltips.gui (game 1.4.6), with a biography block appended.
 
 template Character_tooltip {
