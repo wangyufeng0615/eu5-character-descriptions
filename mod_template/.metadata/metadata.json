@@ -1,0 +1,11 @@
+{
+  "name": "Character Biographies (dev)",
+  "version": "0.1.0",
+  "game_id": "eu5",
+  "supported_game_version": "1.*",
+  "short_description": "English and Simplified Chinese biographies for historical characters, shown in the character tooltip.",
+  "tags": ["Historical", "Translation"],
+  "id": "eu5_character_bios",
+  "relationships": [],
+  "game_custom_data": {}
+}

@@ -1,0 +1,401 @@
+﻿# Character Biographies (test): vanilla Character_tooltip and dead_character_tooltip from
+# in_game/gui/shared/character_tooltips.gui (game 1.4.6), with a biography block appended.
+
+template Character_tooltip {
+	ContextualTooltipType = {
+		datacontext = "[Character.GetRoleMask]"
+
+		blockoverride "title_icon" {
+			widget = {
+				using = tooltip_title_icon_size
+
+				character_role_icon = {
+					blockoverride "icon_size" {
+						using = tooltip_title_icon_size
+					}
+
+					blockoverride "icon_visible" {
+						visible = "[EqualTo_int32(CharacterRoleMask.GetFirstRoleIndex, PdxGuiWidget.GetIndexInDataModel)]"
+					}
+				}
+			}
+		}
+
+		blockoverride "title_text" {
+			text = "[Character.GetNameToFitWithNoTooltip('(int32)-1', '(bool)yes')]"
+		}
+
+		blockoverride "concept_link" {
+			text = "[character|E]"
+		}
+
+		blockoverride "tooltip_content" {
+			TooltipScrolledDebugTextBlock = {
+				blockoverride "block_scrollarea" { maximumsize = { -1 250 }}
+				textcontext = "[Character.GetDebugTooltip]"
+			}
+
+			TooltipCharacterHeader = {}
+
+			TooltipListBase = {
+				visible = "[Not(StringIsEmpty(Character.GetRelationTooltip))]"
+				TooltipListRowContent = {
+					TooltipManualTableField = {
+						visible = "[And(Not(StringIsEmpty(Character.GetRelationToCountryInfo)),Character.HasCourtCountry)]"
+						blockoverride "field_content" {
+							margin = { 10 0 }
+							spacing = 10
+
+							character_role_icon = {
+								blockoverride "icon_size" {
+									size = { 25 25 }
+								}
+				
+								blockoverride "icon_visible" {
+									visible = "[EqualTo_int32(CharacterRoleMask.GetFirstRoleIndex, PdxGuiWidget.GetIndexInDataModel)]"
+								}
+							}
+
+							text_single = {
+								align = nobaseline
+								autoresize = yes
+								elide = right
+								using = tooltip_max_width_title_wide
+								text = "[Character.GetRelationToCountryInfo]"
+							}
+
+							expand = {}
+						}
+					}
+
+					TooltipManualTableField = {
+						visible = "[Not(StringIsEmpty(Character.GetDeathAndAgeInfo))]"
+						blockoverride "field_content" {
+							margin = { 10 0 }
+							spacing = 10
+
+							character_role_icon = {
+								blockoverride "icon_size" {
+									size = { 25 25 }
+								}
+				
+								blockoverride "icon_visible" {
+									visible = "[EqualTo_int32(CharacterRoleMask.GetFirstRoleIndex, PdxGuiWidget.GetIndexInDataModel)]"
+								}
+							}
+
+							text_single = {
+								align = nobaseline
+								autoresize = yes
+								elide = right
+								using = tooltip_max_width_title_wide
+								text = "[Character.GetDeathAndAgeInfo]"
+							}
+
+							expand = {}
+						}
+					}
+
+					TooltipManualTableField = {
+						visible = "[Not(StringIsEmpty(Character.GetRelationToRulerInfo))]"
+						blockoverride "field_content" {
+							margin = { 10 0 }
+							spacing = 10
+
+							icon = {
+								size = { 25 25 }
+								texture = "gfx/interface/icons/character_roles/blood_related.dds"
+							}
+
+							text_single = {
+								align = nobaseline
+								autoresize = yes
+								elide = right
+								using = tooltip_max_width_title_wide
+								text = "[Character.GetRelationToRulerInfo]"
+							}
+
+							expand = {}
+						}
+					}
+				}
+			}
+
+			TooltipScrolledRowList = {
+				visible = "[And(Character.IsAlive, Or(Not(StringIsEmpty(Character.GetRulerTermsTooltip)), Not(StringIsEmpty(Character.GetReligiousOrderHeadTitle))))]"
+				textcontext = "[Character.GetActiveRulerTermsTooltip][Localize('NEWLINE_BREAK')][Character.GetActiveRegenciesTooltip][Localize('NEWLINE_BREAK')][Character.GetReligiousOrderHeadTitle]"
+				blockoverride "block_scrollarea" { maximumsize = { -1 300 }}
+				blockoverride "block_title" {
+					text = "RULER_ACTIVE_TITLES_HEADER"
+				}
+			}
+
+			TooltipScrolledRowList = {
+				visible = "[And(Character.IsAlive, Not(StringIsEmpty(Character.GetPreviousRulerTermsTooltip)))]"
+				textcontext = "[Character.GetPreviousRulerTermsTooltip]"
+				blockoverride "block_scrollarea" { maximumsize = { -1 300 }}
+				blockoverride "block_title" {
+					text = "RULER_TITLE_HISTORY_HEADER"
+				}
+			}
+
+			TooltipScrolledRowList = {
+				visible = "[And(Not(Character.IsAlive), DataModelHasItems(Character.GetAllTitles))]"
+				textcontext =  "[Character.GetRulerTermsTooltip]"
+
+				blockoverride "block_title" {
+					text = "RULER_TITLE_HISTORY_HEADER"
+				}
+			}
+			
+			
+			TooltipTextBlock = {
+				visible = "[And3(Not(Character.CanGiveUnitBonus), Character.HasUnit, Character.CanSelectUnit)]"
+				datacontext = "[Character]"
+				blockoverride "text" {
+					text = "CHARACTER_NO_BONUS_UNTIL"
+				}
+			}
+
+			TooltipTextBlock = {
+				visible = "[And(Character.IsArtist, Character.HasArtInProgress)]"
+				blockoverride "text" {
+					text = "[Character.GetArtProgressInfo]"
+				}
+			}
+
+			TooltipRowList = {
+				visible = "[And(Character.IsArtist, DataModelHasItems(Character.GetWorksOfArt))]"
+				blockoverride "block_title" { text = "CHAR_WORK_OF_ART_HEADER" }
+				blockoverride "rowlist_datamodel_is_empty" { visible = "[IsDataModelEmpty(Character.GetWorksOfArt)]"}
+				blockoverride "rowlist_datamodel_has_items" { visible = "[DataModelHasItems(Character.GetWorksOfArt)]"}
+				blockoverride "rowlist_datamodel" { datamodel = "[Character.GetWorksOfArt]" }
+				blockoverride "rowlist_item" { text = "[WorkOfArt.GetName]" }
+			}
+
+			TooltipListBase = {
+				TooltipListRowContent = {
+					TooltipManualTableField = {
+						# don't show this unless they're yours or you can use it to cheat
+						visible = "[And(Character.HasCourtCountry, Character.CanSelectUnit)]"
+						blockoverride "field_content" {
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								autoresize = no
+								raw_text = "[location|e]"
+							}
+
+							text_single = {
+								autoresize = yes
+								text = "[Character.GetLocation.GetName]"
+							}
+						}
+					}
+
+					TooltipManualTableField = {
+						visible = "[DataModelHasItems(Character.GetSpouses)]"
+
+						blockoverride "field_content" {
+							text_single = {
+								raw_text = "[spouses|e]"
+							}
+
+							expand = {}
+
+							hbox = {
+								datamodel = "[DataModelSubSpan(Character.GetSpouses, '(int32)0', '(int32)10')]"
+								item = {
+									ListOfCharactersItem = {
+										visible = "[Character.IsValid]"
+										size = { 25 25 }
+									}
+								}
+							}
+
+							text_single = {
+								margin = { 10 0 }
+								visible = "[GreaterThan_int32(GetDataModelSize(Character.GetSpouses), '(int32)10')]"
+								text = "[GetDataModelSize(Character.GetSpouses)|L]"
+
+								tooltipwidget = {
+									using = CharacterSpousesList_tooltip
+								}
+							}
+						}
+					}
+
+					TooltipManualTableField = {
+						visible = "[DataModelHasItems(Character.GetBetrothed)]"
+
+						blockoverride "field_content" {
+							text_single = {
+								raw_text = "[betrothed|e]"
+							}
+
+							expand = {}
+
+							hbox = {
+								datamodel = "[DataModelSubSpan(Character.GetBetrothed, '(int32)0', '(int32)10')]"
+								item = {
+									ListOfCharactersItem = {
+										visible = "[Character.IsValid]"
+										size = { 25 25 }
+									}
+								}
+							}
+
+							text_single = {
+								margin = { 10 0 }
+								visible = "[GreaterThan_int32(GetDataModelSize(Character.GetBetrothed), '(int32)10')]"
+								text = "[GetDataModelSize(Character.GetBetrothed)|L]"
+
+								tooltipwidget = {
+									using = CharacterBetrothedList_tooltip
+								}
+							}
+						}
+					}
+
+					TooltipManualTableField = {
+						visible = "[DataModelHasItems(Character.GetChildren)]"
+
+						blockoverride "field_content" {
+							text_single = {
+								raw_text = "[children|e]"
+							}
+
+							expand = {}
+
+							hbox = {
+								datamodel = "[DataModelSubSpan(Character.GetChildren, '(int32)0', '(int32)10')]"
+								item = {
+									ListOfCharactersItem = {
+										size = { 25 25 }
+									}
+								}
+							}
+
+							text_single = {
+								margin = { 10 0 }
+								visible = "[GreaterThan_int32(GetDataModelSize(Character.GetChildren), '(int32)10')]"
+								text = "[GetDataModelSize(Character.GetChildren)|L]"
+
+								tooltipwidget = {
+									using = CharacterChildrenList_tooltip 
+								}
+							}
+						}
+					}
+
+					TooltipManualTableField = {
+						visible = "[Character.HasRebel]"
+						blockoverride "field_content" {
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								autoresize = no
+								raw_text = "[rebel|e]"
+							}
+
+							text_single = {
+								autoresize = yes
+								text = "[Character.GetRebel.GetName]"
+							}
+						}
+					}
+
+					TooltipManualTableField = {
+						visible = "[And(Character.IsAlive, DataModelHasItems(Character.GetAllTitles))]"
+						blockoverride "field_content" {
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								autoresize = no
+								raw_text = "[title_history|e]"
+							}
+
+							text_single = {
+								autoresize = yes
+								text = "[GetDataModelSize(Character.GetAllTitles)|L]"
+								tooltipwidget = {
+									using = CharacterRulingHistory_tooltip
+								}
+							}
+						}
+					}
+				}
+			}
+
+			TooltipIconRow = {
+				visible =  "[Not(IsDataModelEmpty(Character.GetTimedModifiers))]"
+				blockoverride "icon" {
+					icon = {
+						size = { 27 27 }
+						texture = "[GetConceptTexture('character_modifier')]"
+					}
+					tooltip = "[character_modifiers|e]"
+					tagtooltip_enabled = yes
+				}
+
+				blockoverride "items" {
+					datamodel = "[Character.GetTimedModifiers]"
+					item = {
+						timed_modifier_icon = {
+							size = { 27 27 }
+							datacontext = "[TimedModifier]"
+							tooltipwidget = {
+								using = timed_modifier_tooltip
+								blockoverride "concept_link" {
+									text = "[character_modifier|e]"
+								}
+							}
+						}
+					}
+				}
+			}
+		
+			# eu5_character_bios_test: historical biography
+			TooltipFlavorTextBlock = {
+				visible = "[Not(StringIsEmpty(Character.Custom('cb_character_bio')))]"
+				blockoverride "text" {
+					text = "[Character.Custom('cb_character_bio')]"
+				}
+			}
+		}
+	}
+}
+
+template dead_character_tooltip {
+	ContextualTooltipType = {
+		blockoverride "title_text" {
+			text = "CHARACTER_IS_DEAD"
+		}
+		blockoverride "title_icon" {
+			icon = {
+				using = tooltip_title_icon_size
+				texture = "gfx/interface/icons/character_roles/death.dds"
+			}
+		}
+		blockoverride "concept_link" {
+			text = [role|e]
+		}
+		blockoverride "tooltip_content" {
+			TooltipTextBlock = {
+				blockoverride "text" {
+					text = "[Character.GetFullDeathInfo]"
+				}
+			}
+			TooltipFlavorTextBlock = {
+				blockoverride "text" {
+					text = "DEAD_CHARACTER_TT_FLAVOR"
+				}
+			}
+		
+			# eu5_character_bios_test: historical biography
+			TooltipFlavorTextBlock = {
+				visible = "[Not(StringIsEmpty(Character.Custom('cb_character_bio')))]"
+				blockoverride "text" {
+					text = "[Character.Custom('cb_character_bio')]"
+				}
+			}
+		}
+	}
+}
