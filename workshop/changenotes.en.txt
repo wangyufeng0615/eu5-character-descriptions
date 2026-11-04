@@ -1,2 +1,2 @@
-1.0.0
-First public release: English and Chinese biographies for 7,747 historical characters.
+1.0.1
+Rewrote the biographies of 663 rulers, heirs and regents alive at the 1337 start: each now sets the person in their time and highlights the deeds they are remembered for. Facts were checked against the sources and several errors corrected.
