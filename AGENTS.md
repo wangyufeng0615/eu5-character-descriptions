@@ -1,6 +1,6 @@
 # 所有历史人物的描述（Descriptions for Every Historical Character）：发布工程
 
-这里把研究工程写好的人物介绍构建成 EU5 模组，装进本机游戏做实验，也从这里发布到创意工坊。模组 ID `character_descriptions`，工坊条目还没建（`project.json` 的 `publishedfileid` 为 null）。正文、身份判断和写作规则都在研究工程，这里不改正文。
+这里把研究工程写好的人物介绍构建成 EU5 模组，装进本机游戏做实验，也从这里发布到创意工坊。模组 ID `character_descriptions`，工坊条目 [3833397845](https://steamcommunity.com/sharedfiles/filedetails/?id=3833397845)（2026-11-04 建，1.0.0，**私密**，改公开由作者在网页上做）。正文、身份判断和写作规则都在研究工程，这里不改正文。
 
 ## 三处位置
 
@@ -45,11 +45,11 @@ python -B tools\build.py --verify dist\<新目录>
 
 1. **更新数据**：研究工程质量流程跑完后，在 MacBook 上 `tools/sync_workshop.sh` 导出最新正文并装进游戏，进游戏看几个人物的浮窗（中英文各看），顺便看浮窗有没有变卡（几千条可定制本地化的性能还没实测）。
 2. **准备版本**：`python -B tools\release.py 1.0.0 --note "First public release." --install --commit`。它升版本号、写 `CHANGELOG.md`、跑测试和检查、构建到 `dist\release-1.0.0\`、核对、装进游戏并提交。失败会把版本号和 CHANGELOG 改回去。`--dry-run` 只检查和构建。
-3. **第一次上传（作者做）**：工坊条目要由作者用 EU5 的模组工具建：选上传，填第 2 步装进 mod 目录那份的**完整路径**（只传 `character_descriptions\`，含隐藏的 `.metadata\`；EU5 地块那边用相对路径时把整个工作目录传上去过）。可见性先选私密，标题和描述照 `workshop/description.*.txt`，封面 `workshop/assets/cover.jpg`。建好后把条目编号填进 `project.json` 的 `publishedfileid` 并提交。
+3. **第一次上传（已做过）**：2026-11-04 用 `tools/steam_create.py 1.0.0` 建了条目（私密、英文页面、主封面、标签），Steam 一返回编号就写进 `project.json`；接着 `steam_page.py --descriptions` 补中文标题描述、`--assets` 补中文封面。都用计划任务在桌面会话里跑（`schtasks /create ... /ru nsh2o /it` 再 `/run`，跑完删任务），记录在 `dist/create-1.0.0.*`。`steam_create.py` 在已有编号时直接拒绝。
 4. **之后的更新**：先 `release.py <新版本>`，再在登录了 Steam 的桌面会话里 `python -B tools\steam_upload.py <版本> --upload --notes-file workshop\changenotes.en.txt --output dist\upload-<版本>.json`；页面文案和封面用 `tools\steam_page.py`。这两个工具改自 EU5 地块发布工程，只更新已有条目，不建条目、不改可见性、不接受条款；远程触发的办法见 EU5 地块发布工程 `docs/PUBLISHING.md`。
 5. **更新说明**：`workshop/changenotes.*.txt` 第一行写版本号；中文更新说明要在网页上补。
 
-**还要作者确认的事**：是否兼容成就（模组加了 `in_game/common` 下的可定制本地化，EU5 地块模组只有本地化和界面文件，情况不同，没实测）；浮窗性能；427 个没有固定脚本 ID 的事件人物还挂不上（研究工程 `AGENTS.md` 里的 `on_character_created` 方案未实测）；工坊页面写了"逐条审阅过"，要等研究工程的审查修复流程跑完再发。
+**还要作者确认的事**：是否兼容成就（模组加了 `in_game/common` 下的可定制本地化，EU5 地块模组只有本地化和界面文件，情况不同，没实测）；浮窗性能；427 个没有固定脚本 ID 的事件人物还挂不上（研究工程 `AGENTS.md` 里的 `on_character_created` 方案未实测）；改公开前进游戏实看中英文浮窗、补截图。
 
 ## 文件
 
@@ -60,6 +60,7 @@ python -B tools\build.py --verify dist\<新目录>
 | `mod_template/in_game/gui/zz_cb_character_tooltips.gui` | 改写原版人物浮窗（`in_game/gui/shared/character_tooltips.gui`）加上生平一块；`.metadata` 由 `build.py` 按 `project.json` 生成 |
 | `tools/build.py` | 检查、构建、核对、装进游戏，只用标准库 |
 | `tools/release.py` | 准备一个版本，两个发布工程相同 |
+| `tools/steam_create.py` | 只用一次：建私密工坊条目 |
 | `tools/steam_upload.py`、`tools/steam_page.py` | 更新已有工坊条目的内容和页面 |
 | `tools/cover.py` | 从生图母版导出封面和缩略图 |
 | `workshop/` | 工坊页面中英文案（BBCode）、更新说明、模组里附带的玩家说明、`page.json` |
