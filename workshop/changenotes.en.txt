@@ -1,2 +1,2 @@
 1.0.0
-First public release: English and Chinese biographies for 7,757 historical characters.
+First public release: English and Chinese biographies for 7,747 historical characters.

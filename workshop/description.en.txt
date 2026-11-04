@@ -2,7 +2,7 @@
 
 Vanilla EU5 tells you a character's traits and stats, but not who they were.
 
-This mod adds an English and Chinese biography to [b]7,757[/b] historical characters: rulers, consorts, heirs, their ancestors and the people of the game's events. Hover over a character's portrait and the biography appears at the bottom of the tooltip.
+This mod adds an English and Chinese biography to [b]7,747[/b] historical characters: rulers, consorts, heirs, their ancestors and the people of the game's events. Hover over a character's portrait and, after a moment, the biography appears at the bottom of the tooltip.
 
 [list]
 [*]English and Chinese in one mod
@@ -21,7 +21,17 @@ Every biography is written from published sources, mainly Wikipedia in English a
 [/list]
 
 [h2]Planned updates[/h2]
-Support the other official EU5 languages.
+[list]
+[*]Biographies for about 400 more characters who appear through events, such as Wang Yangming and Henry Avery. They are already written; the game gives them no fixed ID, so they need a different way to attach.
+[*]Support the other official EU5 languages.
+[/list]
+If you'd like anything else, just leave a comment.
+
+[h2]My other mods[/h2]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3830305546][b]Descriptions for Every Tile[/b][/url] (Europa Universalis V): descriptions for all 28,316 tiles on the EU5 map. Achievement compatible.
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833082096][b]Descriptions for Every Province[/b][/url] (Europa Universalis IV): descriptions for all 3,272 land provinces, from the 1444 start to 1821.
+[/list]
 
 [h2]Update history[/h2]
 [list]

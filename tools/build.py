@@ -155,13 +155,15 @@ def payload(root, cfg, rows):
 # ───────────────────────────── 构建、核对、安装
 
 def page_counts(root, n):
-    """工坊文案、更新说明和玩家说明里写的数量（如 [b]3,272[/b]、"3,272 个"）要和这次构建的条数一致，不一致的文件列出来。"""
+    """工坊文案、更新说明和玩家说明里写的数量（如 [b]3,272[/b]、"3,272 个"）要和这次构建的条数一致，不一致的文件列出来。
+    链接到其他工坊条目的行（"我的其他 MOD"）写的是那些模组的数量，不算。"""
     bad = []
     for rel in ('workshop/description.en.txt', 'workshop/description.zh-CN.txt', 'workshop/changenotes.en.txt',
                 'workshop/changenotes.zh-CN.txt', 'workshop/player-readme.en.md', 'workshop/player-readme.zh-CN.md'):
         p = root / rel
         if p.exists():
-            nums = {int(x.replace(',', '')) for x in re.findall(r'\b\d{1,3}(?:,\d{3})+\b', p.read_text(encoding='utf-8'))}
+            text = '\n'.join(l for l in p.read_text(encoding='utf-8').splitlines() if 'sharedfiles/filedetails' not in l)
+            nums = {int(x.replace(',', '')) for x in re.findall(r'\b\d{1,3}(?:,\d{3})+\b', text)}
             if nums and nums != {n}:
                 bad.append(f'{rel}: {sorted(nums)}')
     return bad
