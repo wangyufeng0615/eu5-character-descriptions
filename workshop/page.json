@@ -59,6 +59,16 @@
       "file": "workshop/screenshots/timur-infant.zh-CN.jpg",
       "language": "schinese",
       "caption": "1337 年还是婴儿的帖木儿"
+    },
+    {
+      "file": "workshop/screenshots/family-square.en.jpg",
+      "language": "english",
+      "caption": "8,209 characters, 6,859 of them linked by blood or marriage"
+    },
+    {
+      "file": "workshop/screenshots/family-square.zh-CN.jpg",
+      "language": "schinese",
+      "caption": "8,209 位历史人物，其中 6,859 位有血缘或婚姻相连"
     }
   ]
 }
