@@ -353,8 +353,10 @@ template Character_tooltip {
 			}
 		
 			# eu5_character_bios_test: historical biography
-			TooltipFlavorTextBlock = {
+			# 长生平在框内滚动，浮窗不会撑出屏幕；写法同原版阶层浮窗（government_tooltips.gui）
+			TooltipScrolledFlavorTextBlock = {
 				visible = "[Not(StringIsEmpty(Character.Custom('cb_character_bio')))]"
+				blockoverride "block_scrollarea" { maximumsize = { -1 360 } }
 				blockoverride "text" {
 					text = "[Character.Custom('cb_character_bio')]"
 				}
@@ -390,8 +392,10 @@ template dead_character_tooltip {
 			}
 		
 			# eu5_character_bios_test: historical biography
-			TooltipFlavorTextBlock = {
+			# 长生平在框内滚动，浮窗不会撑出屏幕；写法同原版阶层浮窗（government_tooltips.gui）
+			TooltipScrolledFlavorTextBlock = {
 				visible = "[Not(StringIsEmpty(Character.Custom('cb_character_bio')))]"
+				blockoverride "block_scrollarea" { maximumsize = { -1 360 } }
 				blockoverride "text" {
 					text = "[Character.Custom('cb_character_bio')]"
 				}

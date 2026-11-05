@@ -219,7 +219,34 @@ def zip_name(cfg):
 
 
 def _rows(root, cfg):
-    return load_rows(root, cfg.get('only_written'))
+    rows, hidden = load_rows(root, cfg.get('only_written'))
+    return apply_link_test(root, rows), hidden
+
+
+# 超链接试验：data/link_test.json 给少数人物换上带链接的正文，只放行下面几种写法，其余游戏指令字符照旧拦截。
+LINK_TOKENS = re.compile(
+    r"\[(?:ShowLocationName|ShowReligionName|ShowCultureName|ShowDynastyName)\('[a-z0-9_]+'\)\]"
+    r"|\[GetCountry\('[A-Z0-9]{3}'\)\.GetName\]"
+    r"|\[GetCharacter\('[a-z0-9_]+'\)\.GetName\]"
+    r"|#TOOLTIP:(?:CHARACTER|LOCATION|COUNTRY|RELIGION),[A-Za-z0-9_]+ [^\[\]$#\"\\]+#!")
+
+
+def apply_link_test(root, rows):
+    p = root / 'data' / 'link_test.json'
+    if not p.exists():
+        return rows
+    tests = {k: v for k, v in json.loads(p.read_text(encoding='utf-8')).items() if not k.startswith('_')}
+    by_id = {r['id']: r for r in rows}
+    for cid, texts in tests.items():
+        if cid not in by_id:
+            raise ValueError(f'link_test.json 里的 {cid} 不在本次构建中')
+        for lang in ('en', 'zh'):
+            t = texts.get(lang)
+            rest = LINK_TOKENS.sub('', t) if isinstance(t, str) else ''
+            if not t or '\n' in t or SPECIAL & set(rest) or any(ord(c) < 32 for c in t):
+                raise ValueError(f'link_test.json 里 {cid} 的 {lang} 含不认识的指令写法')
+            by_id[cid][lang] = t
+    return rows
 
 
 def build(root, output):

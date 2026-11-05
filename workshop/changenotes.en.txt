@@ -1,2 +1,2 @@
-1.0.2
-Researched 208 rulers again: 105 short or missing entries became full biographies. Event characters such as Wang Yangming now show a biography, recognised by name and birthplace. Fixed errors written to the game log when hovering characters.
+1.0.3
+Long biographies now scroll inside the character tooltip, so the tooltip no longer runs off the bottom of the screen.
