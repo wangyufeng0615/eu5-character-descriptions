@@ -2,7 +2,7 @@
 
 python -B tools/steam_page.py --output dist/<新记录>.json                 # 只读：两种语言的标题、描述、封面、可见性
 python -B tools/steam_page.py --descriptions --output dist/<新记录>.json  # 提交两种语言的标题和描述（每种语言标题描述一起提交）
-python -B tools/steam_page.py --assets --output dist/<新记录>.json        # 更新主封面和中文附图
+python -B tools/steam_page.py --assets --output dist/<新记录>.json        # 更新主封面、中文附图和 page.json 登记的画廊截图
 python -B tools/steam_page.py --host-images --output dist/<新记录>.json   # 把描述里用的覆盖率表图存进 Steam 云并公开分享（单独运行）；网址写进 page.json
 
 游戏、条目编号和 steam_api64.dll 路径都读 project.json（steam_app_id、publishedfileid、steam_api_dll）；
@@ -126,7 +126,9 @@ class Steam:
             if not ((path/'.metadata/metadata.json').is_file() or (path/'descriptor.mod').is_file()):
                 raise ValueError('Content must be the built mod folder')
             assert self.ug('SetItemContent', B, [U64,S], handle, str(path).encode())
-        paths = ['workshop/assets/cover.zh-CN.jpg']
+        page = json.loads((ROOT/'workshop/page.json').read_text(encoding='utf-8'))
+        # 画廊不分语言：中文附图加上 page.json 登记的游戏截图，按登记顺序；同名文件就地替换。
+        paths = ['workshop/assets/cover.zh-CN.jpg'] + [s['file'] for s in page.get('screenshots', [])]
         for relative in paths:
             path = ROOT/relative
             assert path.is_file() and path.stat().st_size < 1_000_000

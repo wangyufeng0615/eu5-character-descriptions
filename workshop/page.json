@@ -20,12 +20,43 @@
     "Translation"
   ],
   "description_image_urls": {
-    "english": "https://images.steamusercontent.com/ugc/10636967561533810313/8AF99E1168E750BB2B2D761375ECE46DF5E5F35E/",
-    "schinese": "https://images.steamusercontent.com/ugc/16423082971497735575/B08B37D57B2F22610AAC99BB1F16B7526A2339C3/",
+    "english": "https://images.steamusercontent.com/ugc/14856850614480175101/70F022A279C5B834FCAC5DF0168D5AAD4FB5C288/",
+    "schinese": "https://images.steamusercontent.com/ugc/13688421638722290389/BD70D0EF8CAC9F0F9E6F29CA1C0BD661FCE4A6E7/",
     "hosting": "Steam RemoteStorage FileShare; do not delete the cloud files",
     "cloud_files": {
-      "english": "eu5_character_coverage_en_8e50862d4366c3b7.png",
-      "schinese": "eu5_character_coverage_zh-CN_dc5e953dca3ceaa3.png"
+      "english": "eu5_character_coverage_en_dd5c9848214afa56.png",
+      "schinese": "eu5_character_coverage_zh-CN_cb025bfeee80eab2.png"
+    },
+    "superseded_cloud_files": [
+      "eu5_character_coverage_en_8e50862d4366c3b7.png",
+      "eu5_character_coverage_zh-CN_dc5e953dca3ceaa3.png"
+    ]
+  },
+  "screenshots": [
+    {
+      "file": "workshop/screenshots/philippe-vi.en.jpg",
+      "language": "english",
+      "caption": "Philip VI of France: a ruler's biography"
+    },
+    {
+      "file": "workshop/screenshots/timur-family-tree.en.jpg",
+      "language": "english",
+      "caption": "Timur as an infant, hovered in the dynasty tree"
+    },
+    {
+      "file": "workshop/screenshots/philippe-vi.zh-CN.jpg",
+      "language": "schinese",
+      "caption": "法王腓力六世的生平"
+    },
+    {
+      "file": "workshop/screenshots/toghon-temur.zh-CN.jpg",
+      "language": "schinese",
+      "caption": "元惠宗妥懽帖睦尔的生平"
+    },
+    {
+      "file": "workshop/screenshots/timur-infant.zh-CN.jpg",
+      "language": "schinese",
+      "caption": "1337 年还是婴儿的帖木儿"
     }
-  }
+  ]
 }

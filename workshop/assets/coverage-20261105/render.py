@@ -7,7 +7,7 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parent
 S = 4                       # internal supersampling; exported at 2x
 W = 620                     # logical width, fits Steam's description column
-PAD, ROW_H, HEAD_H, TOTAL_H, LEGEND_H, RADIUS = 18, 52, 34, 60, 50, 8
+PAD, ROW_H, HEAD_H, TOTAL_H, LEGEND_H, RADIUS = 18, 52, 34, 60, 30, 8
 BG, ROW_LINE, TRACK = '#2a2e33', '#3a3f45', '#44494f'
 GREEN, BLUE, MUTED, WHITE = '#2ea043', '#1f6feb', '#9aa4ae', '#ffffff'
 BOLD = 'C:/Windows/Fonts/msyhbd.ttc'
@@ -21,16 +21,16 @@ TEXT = {
            'ancestors': ('Ancestors', 'Family trees, back to Charlemagne'),
            'events': ('Event figures', 'Newton, Zheng He, Napoleon…'),
            'total': ('All historical characters', None),
-           'legend': ('Shown in game', 'Written, attaching in a coming update', 'Too little known to identify'),
-           'foot': 'Excludes {n} fictional or placeholder characters'},
+           'legend': ('Shown in game', 'Written, attaching in a coming update', 'Not enough reliable sources yet, being filled in'),
+           },
     'zh-CN': {'head': ('人物类别', '有生平 / 总数', '覆盖率'),
               'rulers': ('君主与统治者', '国王、皇帝、苏丹、摄政'),
               'living': ('1337 年在世的其他人物', '配偶、子女、旁支'),
               'ancestors': ('先辈', '家族树里的祖先，远至查理曼'),
               'events': ('事件人物', '牛顿、郑和、拿破仑……'),
               'total': ('全部历史人物', None),
-              'legend': ('游戏中显示', '已写好，后续版本接入', '资料太少，无法确认身份'),
-              'foot': '不含 {n} 位虚构或占位人物'},
+              'legend': ('游戏中显示', '已写好，后续版本接入', '可靠资料暂时不足，逐渐补充中'),
+              },
 }
 
 
@@ -97,7 +97,6 @@ def render(lang, data):
         d.rounded_rectangle((x * S, (y - 9) * S, (x + 10) * S, (y + 1) * S), 2 * S, fill=color)
         text(d, (x + 15, y), label, f_leg, MUTED)
         x += 15 + d.textlength(label, font=f_leg) / S + 18
-    text(d, (PAD, y + 20), t['foot'].format(n=data['excluded_non_historical']), f_leg, MUTED)
     out = ROOT / f'coverage.{lang}.png'
     img.resize((W * 2, H * 2), Image.Resampling.LANCZOS).save(out, optimize=True)
     return out

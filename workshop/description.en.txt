@@ -1,51 +1,36 @@
 [h1]A biography for every historical character[/h1]
-[img]https://images.steamusercontent.com/ugc/10636967561533810313/8AF99E1168E750BB2B2D761375ECE46DF5E5F35E/[/img]
+[img]https://images.steamusercontent.com/ugc/14856850614480175101/70F022A279C5B834FCAC5DF0168D5AAD4FB5C288/[/img]
 
-Vanilla EU5 tells you a character's traits and stats, but not who they were.
+Vanilla EU5 has a great many real historical characters and rich family trees, but very few character descriptions.
 
-This mod adds English and Chinese biographies to [b]7,789[/b] historical characters, [b]90%[/b] of all those in the game: the rulers, consorts and heirs of the 1337 start, their ancestors in the family tree, and famous people who arrive through events. Hover over a character and the biography appears at the bottom of the tooltip.
+This mod adds English and Chinese biographies to [b]7,789[/b] real historical characters, nearly all of those in the game. Hover over a character to read it.
 
-[h2]Who you'll meet[/h2]
+For every character, famous or obscure, I gathered sources, mainly Wikipedia in English and the local language, and matched them to the game's character by family, dates and titles. Each biography tells the world the person lived in and what they are remembered for. When little is known about someone, the biography stays short; nothing is made up.
+
+About the use of AI: models such as GPT 6.1 Terra and DeepSeek Flash gathered the sources, then Claude Opus 5.5, one of the best models for writing, combined and polished them in the spirit of EU5. These are the best models available and it took a huge number of tokens, but I think it was worth it :)
+
+[h2]Some interesting characters[/h2]
 [list]
-[*][b]Trasak Paem[/b], a royal gardener in Cambodia who guarded the king's cucumbers so fiercely that he speared the king himself, and was later chosen as king by a white elephant
-[*][b]Olga of Kiev[/b], who avenged her husband by burning the Drevlian capital with birds carrying burning sulphur
-[*][b]Qutb ud-Din Aibak[/b], a slave sold in the market of Nishapur who founded the Delhi Sultanate, then died when his saddle pierced his ribs in a polo match
-[*][b]Charlemagne[/b], who received an elephant named Abul-Abbas from the caliph Harun al-Rashid
-[*][b]Valdemar II[/b] of Denmark, at whose battle of Lindanise, legend says, the Danish flag fell from the sky
+[*][b]Trasak Paem[/b]: a royal gardener in Cambodia who guarded the king's cucumbers so well that he fatally speared the king himself when he came to test him at night, and was later chosen as king by a white elephant
+[*][b]Olga of Kiev[/b]: avenged her husband by burning the Drevlian capital with birds carrying burning sulphur
+[*][b]Qutb ud-Din Aibak[/b]: a boy sold in the slave market of Nishapur who went on to found the Delhi Sultanate, and died when his saddle pierced his ribs in a polo match
+[*][b]Charlemagne[/b]: the caliph Harun al-Rashid sent him an elephant named Abul-Abbas
+[*][b]Valdemar II of Denmark[/b]: legend says the Danish flag fell from the sky at his victory at Lindanise
 [*]And Constantine the Great, Zheng He, Wang Yangming, Napoleon…
 [/list]
 
+[h2]Features[/h2]
 [list]
-[*]English and Chinese in one mod
-[*]Real lives: origins, key years, what they did and how they died
-[*]Covers the dead too: open a family tree and the ancestors have biographies as well
-[*]Only adds text; no gameplay changes
+[*]English + Chinese
+[*]Only adds text; no effect on other features or game performance
 [*]Can be added to an existing save
 [/list]
 
-Every biography is written from published sources, mainly Wikipedia in English and the local language, and matched to the game's character by family, dates and titles. The 663 rulers, heirs and regents alive in 1337 were rewritten a second time to show the world they lived in and the deeds they are remembered for. Where little is known about a person, the biography stays short rather than invented. I used the best models available and spent a lot of tokens on this, and I think it was worth it :)
-
-If you find a mistake, please leave a comment with the character's name. I'll keep maintaining and updating this mod!
-
-[h2]Good to know[/h2]
-[list]
-[*]Most characters created by events have no fixed ID in the game. A few famous ones, such as Wang Yangming, are recognised by name and birthplace; about 420 others don't show a biography yet.
-[*]Randomly generated characters have no biography.
-[*]Mods that replace the character tooltip may hide the biography.
-[*]Biographies tell the person's real life and do not change with what happens in your game.
-[/list]
-
-[h2]Planned updates[/h2]
-[list]
-[*]Biographies for the remaining event characters, such as Henry Avery.
-[*]Longer biographies for more characters.
-[*]Support the other official EU5 languages.
-[/list]
-If you'd like anything else, just leave a comment.
+If you find a mistake, please leave a comment. I'll keep maintaining and updating this mod! Some characters aren't covered yet because of how EU5's code creates them, which makes them hard to show. I'll keep working on it until every one is covered.
 
 [h2]My other mods[/h2]
 [list]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3830305546][b]Descriptions for Every Tile[/b][/url] (Europa Universalis V): descriptions for all 28,316 tiles on the EU5 map. Achievement compatible.
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3830305546][b]Descriptions for Every Tile[/b][/url] (Europa Universalis V): descriptions for all 28,316 tiles on the EU5 map. Achievement compatible, 2,000+ subscribers.
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833082096][b]Descriptions for Every Province[/b][/url] (Europa Universalis IV): descriptions for all 3,272 land provinces, from the 1444 start to 1821.
 [/list]
 
