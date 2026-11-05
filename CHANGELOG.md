@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3 — 2026-11-05
+
+- Long biographies now scroll inside the character tooltip, so the tooltip no longer runs off the bottom of the screen.
+
 ## 1.0.2 — 2026-11-05
 
 - Researched 208 rulers again, turning 105 short or missing entries into full biographies; event characters such as Wang Yangming now show a biography; fixed errors logged when hovering characters.
