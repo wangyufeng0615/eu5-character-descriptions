@@ -1,5 +1,5 @@
 [h1]A biography for every historical character[/h1]
-[img]https://images.steamusercontent.com/ugc/14856850614480175101/70F022A279C5B834FCAC5DF0168D5AAD4FB5C288/[/img]
+[img]https://images.steamusercontent.com/ugc/10300716693799460515/2B2DD8B3A388ED947512F400327F3F5E7646FBCB/[/img]
 
 Vanilla EU5 has a great many real historical characters and rich family trees, but very few character descriptions.
 

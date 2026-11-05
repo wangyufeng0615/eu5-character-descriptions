@@ -20,16 +20,18 @@
     "Translation"
   ],
   "description_image_urls": {
-    "english": "https://images.steamusercontent.com/ugc/14856850614480175101/70F022A279C5B834FCAC5DF0168D5AAD4FB5C288/",
-    "schinese": "https://images.steamusercontent.com/ugc/13688421638722290389/BD70D0EF8CAC9F0F9E6F29CA1C0BD661FCE4A6E7/",
+    "english": "https://images.steamusercontent.com/ugc/10300716693799460515/2B2DD8B3A388ED947512F400327F3F5E7646FBCB/",
+    "schinese": "https://images.steamusercontent.com/ugc/10251958396434386720/B1F6878358E37EF2EF7C0ECE36FE7F23A8317A94/",
     "hosting": "Steam RemoteStorage FileShare; do not delete the cloud files",
     "cloud_files": {
-      "english": "eu5_character_coverage_en_dd5c9848214afa56.png",
-      "schinese": "eu5_character_coverage_zh-CN_cb025bfeee80eab2.png"
+      "english": "eu5_character_coverage_en_0b1408a6cd6d691f.png",
+      "schinese": "eu5_character_coverage_zh-CN_b7c0f1603bd20ec5.png"
     },
     "superseded_cloud_files": [
       "eu5_character_coverage_en_8e50862d4366c3b7.png",
-      "eu5_character_coverage_zh-CN_dc5e953dca3ceaa3.png"
+      "eu5_character_coverage_zh-CN_dc5e953dca3ceaa3.png",
+      "eu5_character_coverage_en_dd5c9848214afa56.png",
+      "eu5_character_coverage_zh-CN_cb025bfeee80eab2.png"
     ]
   },
   "screenshots": [

@@ -21,7 +21,7 @@ TEXT = {
            'ancestors': ('Ancestors', 'Family trees, back to Charlemagne'),
            'events': ('Event figures', 'Newton, Zheng He, Napoleon…'),
            'total': ('All historical characters', None),
-           'legend': ('Shown in game', 'Written, attaching in a coming update', 'Not enough reliable sources yet, being filled in'),
+           'legend': ('Shown in game', 'Written, but not shown in game yet; in development', 'Not enough reliable sources yet, being filled in'),
            },
     'zh-CN': {'head': ('人物类别', '有生平 / 总数', '覆盖率'),
               'rulers': ('君主与统治者', '国王、皇帝、苏丹、摄政'),
@@ -29,7 +29,7 @@ TEXT = {
               'ancestors': ('先辈', '家族树里的祖先，远至查理曼'),
               'events': ('事件人物', '牛顿、郑和、拿破仑……'),
               'total': ('全部历史人物', None),
-              'legend': ('游戏中显示', '已写好，后续版本接入', '可靠资料暂时不足，逐渐补充中'),
+              'legend': ('游戏中显示', '生平已写好，但在游戏中暂时还无法显示，开发中', '可靠资料暂时不足，逐渐补充中'),
               },
 }
 
@@ -54,10 +54,22 @@ def bar(draw, x, y, w, h, shown, pending, total):
         draw.rectangle(((sx - r) * S, y * S, sx * S, (y + h) * S), fill=GREEN)
 
 
+def legend_breaks(t):
+    f = font(REG, 12)
+    d = ImageDraw.Draw(Image.new('L', (1, 1)))
+    x, n = PAD, 0
+    for label in t['legend']:
+        w = 15 + d.textlength(label, font=f) / S
+        if x + w > W - PAD:
+            x, n = PAD, n + 1
+        x += w + 18
+    return n
+
+
 def render(lang, data):
     t = TEXT[lang]
     rows = data['rows']
-    H = PAD + HEAD_H + ROW_H * (len(rows) - 1) + TOTAL_H + LEGEND_H + PAD // 2
+    H = PAD + HEAD_H + ROW_H * (len(rows) - 1) + TOTAL_H + LEGEND_H + PAD // 2 + 24 * legend_breaks(t)
     img = Image.new('RGBA', (W * S, H * S))
     d = ImageDraw.Draw(img)
     d.rounded_rectangle((0, 0, W * S - 1, H * S - 1), RADIUS * S, fill=BG)
@@ -94,6 +106,8 @@ def render(lang, data):
     x = PAD
     f_leg = font(REG, 12)
     for label, color in zip(t['legend'], (GREEN, BLUE, TRACK)):
+        if x + 15 + d.textlength(label, font=f_leg) / S > W - PAD:
+            x, y = PAD, y + 24
         d.rounded_rectangle((x * S, (y - 9) * S, (x + 10) * S, (y + 1) * S), 2 * S, fill=color)
         text(d, (x + 15, y), label, f_leg, MUTED)
         x += 15 + d.textlength(label, font=f_leg) / S + 18
