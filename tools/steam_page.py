@@ -37,6 +37,17 @@ class DetailsPrefix(C.Structure):
                 ('title', C.c_char*129), ('description', C.c_char*8000), ('owner', U64),
                 ('created', U32), ('updated', U32), ('added', U32), ('visibility', I)]
 
+def live_copy_matches(url, path):
+    """画廊图网址带文件的 SHA1；网址能打开且 SHA1 和本地文件一致，才算网上那张完好。"""
+    if not url or hashlib.sha1(path.read_bytes()).hexdigest().upper() not in url:
+        return False
+    try:
+        with urllib.request.urlopen(url, timeout=30) as response:
+            return response.status == 200
+    except Exception:
+        return False
+
+
 class Steam:
     def __init__(self):
         if not ITEM:
@@ -120,7 +131,9 @@ class Steam:
 
     def assets(self, before, content=None):
         handle = self.ug('StartItemUpdate', U64, [U32,U64], APP, ITEM)
-        assert self.ug('SetItemPreview', B, [U64,S], handle, str(ROOT/'workshop/assets/cover.jpg').encode())
+        cover = ROOT/'workshop/assets/cover.jpg'
+        if not live_copy_matches(before.get('cover'), cover):
+            assert self.ug('SetItemPreview', B, [U64,S], handle, str(cover).encode())
         if content:
             path = Path(content).resolve()
             if not ((path/'.metadata/metadata.json').is_file() or (path/'descriptor.mod').is_file()):
@@ -135,6 +148,8 @@ class Steam:
             existing = [p for p in before['previews'] if Path(p['file']).name == path.name]
             if len(existing)>1:
                 raise RuntimeError('Ambiguous duplicate preview name')
+            if existing and live_copy_matches(existing[0]['url'], path):
+                continue  # 网上那张已经和本地一样：重传同样内容会让 Steam 删掉旧文件却不接上新文件，画廊里就只剩空位
             if existing:
                 assert self.ug('UpdateItemPreviewFile', B, [U64,U32,S], handle, existing[0]['index'], str(path).encode())
             else:
