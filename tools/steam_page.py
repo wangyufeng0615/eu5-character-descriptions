@@ -3,6 +3,7 @@
 python -B tools/steam_page.py --output dist/<新记录>.json                 # 只读：两种语言的标题、描述、封面、可见性
 python -B tools/steam_page.py --descriptions --output dist/<新记录>.json  # 提交两种语言的标题和描述（每种语言标题描述一起提交）
 python -B tools/steam_page.py --assets --output dist/<新记录>.json        # 更新主封面和中文附图
+python -B tools/steam_page.py --host-images --output dist/<新记录>.json   # 把描述里用的覆盖率表图存进 Steam 云并公开分享（单独运行）；网址写进 page.json
 
 游戏、条目编号和 steam_api64.dll 路径都读 project.json（steam_app_id、publishedfileid、steam_api_dll）；
 publishedfileid 还是 null（工坊条目还没建）时直接拒绝。不读凭据，不改可见性，不建新条目，不接受条款。
@@ -10,8 +11,10 @@ publishedfileid 还是 null（工坊条目还没建）时直接拒绝。不读�
 """
 import argparse
 import ctypes as C
+import hashlib
 import json
 import os
+import urllib.request
 from pathlib import Path
 import time
 
@@ -136,6 +139,37 @@ class Steam:
                 assert self.ug('AddItemPreviewFile', B, [U64,S,I], handle, str(path).encode(), 0)
         self.submit(handle)
 
+    def host_images(self):
+        """描述正文的图片走 Steam 云 FileShare，不占工坊画廊（画廊条目删掉后旧链接会 404）。做法同 EU5 地块项目。"""
+        storage = self.bind('SteamAPI_SteamRemoteStorage_v016', P)()
+        if not storage:
+            raise RuntimeError('Steam Remote Storage is unavailable')
+        images = json.loads((ROOT/'workshop/page.json').read_text(encoding='utf-8'))['description_images']
+        results = {}
+        for language, relative in images.items():
+            source = ROOT/relative
+            content = source.read_bytes()
+            sha256 = hashlib.sha256(content).hexdigest()
+            filename = f'eu5_character_{source.stem.replace(".", "_")}_{sha256[:16]}.png'.encode()
+            if self.bind('SteamAPI_ISteamRemoteStorage_FileExists', B, P, S)(storage, filename):
+                size = self.bind('SteamAPI_ISteamRemoteStorage_GetFileSize', I, P, S)(storage, filename)
+                buffer = C.create_string_buffer(size)
+                count = self.bind('SteamAPI_ISteamRemoteStorage_FileRead', I, P, S, P, I)(storage, filename, buffer, size)
+                if size != len(content) or count != size or buffer.raw != content:
+                    raise RuntimeError('Existing cloud file does not match')
+            else:
+                buffer = C.create_string_buffer(content)
+                if not self.bind('SteamAPI_ISteamRemoteStorage_FileWrite', B, P, S, P, I)(storage, filename, buffer, len(content)):
+                    raise RuntimeError('Could not store the image in Steam Cloud')
+            shared = self.wait(self.bind('SteamAPI_ISteamRemoteStorage_FileShare', U64, P, S)(storage, filename), ShareResult, 1307)
+            url = f'https://images.steamusercontent.com/ugc/{shared.file}/{hashlib.sha1(content).hexdigest().upper()}/'
+            with urllib.request.urlopen(urllib.request.Request(url, headers={'Cache-Control':'no-cache'}), timeout=25) as response:
+                if response.status != 200 or response.read() != content:
+                    raise RuntimeError('Shared image CDN content did not match')
+            results[language] = {'cloud_file':filename.decode(), 'ugc_handle':shared.file, 'url':url,
+                                 'sha256':sha256, 'source':relative}
+        return results
+
     def description(self, lang, text, title):
         handle = self.ug('StartItemUpdate', U64, [U32,U64], APP, ITEM)
         assert self.ug('SetItemUpdateLanguage', B, [U64,S], handle, lang.encode())
@@ -148,9 +182,12 @@ def main():
     parser.add_argument('--assets', action='store_true')
     parser.add_argument('--descriptions', action='store_true')
     parser.add_argument('--content', help='Optional built mod folder, only with --assets')
+    parser.add_argument('--host-images', action='store_true', help='Share the description images via Steam Cloud; run alone')
     parser.add_argument('--output', required=True)
     args = parser.parse_args()
     titles = json.loads((ROOT/'workshop/page.json').read_text(encoding='utf-8'))['titles']
+    if args.host_images and (args.assets or args.descriptions):
+        parser.error('--host-images must run alone')
     if args.content and not args.assets:
         parser.error('--content requires --assets')
     output = Path(args.output)
@@ -162,7 +199,7 @@ def main():
         output.write_text(json.dumps({'before':before},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
         if args.assets:
             steam.assets(before['english'], args.content)
-        hosted = None
+        hosted = steam.host_images() if args.host_images else None
         if args.descriptions:
             for lang, file in [('english','description.en.txt'),('schinese','description.zh-CN.txt')]:
                 steam.description(lang, (ROOT/'workshop'/file).read_text(encoding='utf-8'), titles[lang])

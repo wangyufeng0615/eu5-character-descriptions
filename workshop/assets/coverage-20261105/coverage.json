@@ -1,0 +1,11 @@
+{
+  "_note": "2026-11-05, research dc7a6476 + data/match_rules.json. historical = in game minus fictional/made-up/placeholder; shown = biography displays in game; pending = written but no fixed script ID yet; the rest are unidentified (too little in the sources).",
+  "excluded_non_historical": 61,
+  "rows": [
+    {"key": "rulers",    "historical": 1906, "shown": 1889, "pending": 0},
+    {"key": "living",    "historical": 2598, "shown": 2331, "pending": 0},
+    {"key": "ancestors", "historical": 3210, "shown": 3052, "pending": 0},
+    {"key": "events",    "historical": 940,  "shown": 517,  "pending": 420},
+    {"key": "total",     "historical": 8654, "shown": 7789, "pending": 420}
+  ]
+}

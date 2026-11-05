@@ -1,8 +1,9 @@
 [h1]A biography for every historical character[/h1]
+[img]https://images.steamusercontent.com/ugc/10636967561533810313/8AF99E1168E750BB2B2D761375ECE46DF5E5F35E/[/img]
 
 Vanilla EU5 tells you a character's traits and stats, but not who they were.
 
-This mod adds English and Chinese biographies to [b]7,789[/b] historical characters: the rulers, consorts and heirs of the 1337 start, their ancestors in the family tree, and famous people who arrive through events. Hover over a character and the biography appears at the bottom of the tooltip.
+This mod adds English and Chinese biographies to [b]7,789[/b] historical characters, [b]90%[/b] of all those in the game: the rulers, consorts and heirs of the 1337 start, their ancestors in the family tree, and famous people who arrive through events. Hover over a character and the biography appears at the bottom of the tooltip.
 
 [h2]Who you'll meet[/h2]
 [list]

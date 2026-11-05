@@ -1,6 +1,31 @@
 {
-  "titles": {"english": "Descriptions for Every Historical Character", "schinese": "所有历史人物的描述"},
-  "descriptions": {"english": "workshop/description.en.txt", "schinese": "workshop/description.zh-CN.txt"},
-  "cover_images": {"english": "workshop/assets/cover.jpg", "schinese": "workshop/assets/cover.zh-CN.jpg"},
-  "tags": ["Historical", "Translation"]
+  "titles": {
+    "english": "Descriptions for Every Historical Character",
+    "schinese": "所有历史人物的描述"
+  },
+  "descriptions": {
+    "english": "workshop/description.en.txt",
+    "schinese": "workshop/description.zh-CN.txt"
+  },
+  "cover_images": {
+    "english": "workshop/assets/cover.jpg",
+    "schinese": "workshop/assets/cover.zh-CN.jpg"
+  },
+  "description_images": {
+    "english": "workshop/assets/coverage-20261105/coverage.en.png",
+    "schinese": "workshop/assets/coverage-20261105/coverage.zh-CN.png"
+  },
+  "tags": [
+    "Historical",
+    "Translation"
+  ],
+  "description_image_urls": {
+    "english": "https://images.steamusercontent.com/ugc/10636967561533810313/8AF99E1168E750BB2B2D761375ECE46DF5E5F35E/",
+    "schinese": "https://images.steamusercontent.com/ugc/16423082971497735575/B08B37D57B2F22610AAC99BB1F16B7526A2339C3/",
+    "hosting": "Steam RemoteStorage FileShare; do not delete the cloud files",
+    "cloud_files": {
+      "english": "eu5_character_coverage_en_8e50862d4366c3b7.png",
+      "schinese": "eu5_character_coverage_zh-CN_dc5e953dca3ceaa3.png"
+    }
+  }
 }
