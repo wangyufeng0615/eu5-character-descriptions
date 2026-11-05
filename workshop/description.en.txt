@@ -2,27 +2,42 @@
 
 Vanilla EU5 tells you a character's traits and stats, but not who they were.
 
-This mod adds an English and Chinese biography to [b]7,747[/b] historical characters: rulers, consorts, heirs, their ancestors and the people of the game's events. Hover over a character's portrait and, after a moment, the biography appears at the bottom of the tooltip.
+This mod adds English and Chinese biographies to [b]7,789[/b] historical characters: the rulers, consorts and heirs of the 1337 start, their ancestors in the family tree, and famous people who arrive through events. Hover over a character and the biography appears at the bottom of the tooltip.
+
+[h2]Who you'll meet[/h2]
+[list]
+[*][b]Trasak Paem[/b], a royal gardener in Cambodia who guarded the king's cucumbers so fiercely that he speared the king himself, and was later chosen as king by a white elephant
+[*][b]Olga of Kiev[/b], who avenged her husband by burning the Drevlian capital with birds carrying burning sulphur
+[*][b]Qutb ud-Din Aibak[/b], a slave sold in the market of Nishapur who founded the Delhi Sultanate, then died when his saddle pierced his ribs in a polo match
+[*][b]Charlemagne[/b], who received an elephant named Abul-Abbas from the caliph Harun al-Rashid
+[*][b]Valdemar II[/b] of Denmark, at whose battle of Lindanise, legend says, the Danish flag fell from the sky
+[*]And Constantine the Great, Zheng He, Wang Yangming, Napoleon…
+[/list]
 
 [list]
 [*]English and Chinese in one mod
-[*]Biographies follow the person's real life: origins, key years, what they did and how they died
+[*]Real lives: origins, key years, what they did and how they died
+[*]Covers the dead too: open a family tree and the ancestors have biographies as well
 [*]Only adds text; no gameplay changes
 [*]Can be added to an existing save
 [/list]
 
-Every biography is written from published sources, mainly Wikipedia in English and the local language, matched to the game's character by family, dates and titles, and reviewed entry by entry. Where little is known about a person, the biography is short rather than invented. If you find a mistake, please leave a comment with the character's name. I'll keep maintaining and updating this mod!
+Every biography is written from published sources, mainly Wikipedia in English and the local language, and matched to the game's character by family, dates and titles. The 663 rulers, heirs and regents alive in 1337 were rewritten a second time to show the world they lived in and the deeds they are remembered for. Where little is known about a person, the biography stays short rather than invented. I used the best models available and spent a lot of tokens on this, and I think it was worth it :)
+
+If you find a mistake, please leave a comment with the character's name. I'll keep maintaining and updating this mod!
 
 [h2]Good to know[/h2]
 [list]
-[*]Characters created by events without a fixed ID, and randomly generated characters, have no biography.
-[*]Mods that replace the character tooltip may hide the biography block.
+[*]Most characters created by events have no fixed ID in the game. A few famous ones, such as Wang Yangming, are recognised by name and birthplace; about 420 others don't show a biography yet.
+[*]Randomly generated characters have no biography.
+[*]Mods that replace the character tooltip may hide the biography.
 [*]Biographies tell the person's real life and do not change with what happens in your game.
 [/list]
 
 [h2]Planned updates[/h2]
 [list]
-[*]Biographies for about 400 more characters who appear through events, such as Wang Yangming and Henry Avery. They are already written; the game gives them no fixed ID, so they need a different way to attach.
+[*]Biographies for the remaining event characters, such as Henry Avery.
+[*]Longer biographies for more characters.
 [*]Support the other official EU5 languages.
 [/list]
 If you'd like anything else, just leave a comment.
@@ -35,5 +50,7 @@ If you'd like anything else, just leave a comment.
 
 [h2]Update history[/h2]
 [list]
-[*]1.0.0: First public release.
+[*]1.0.2: Researched 208 rulers again, turning 105 short or missing entries into full biographies; event characters such as Wang Yangming now show a biography; fixed errors logged when hovering characters.
+[*]1.0.1: Rewrote the biographies of 663 rulers, heirs and regents alive at the 1337 start.
+[*]1.0.0: First release.
 [/list]

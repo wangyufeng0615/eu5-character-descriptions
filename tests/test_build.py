@@ -65,11 +65,25 @@ class TestBuild(Fixture):
                      'in_game/localization/simp_chinese/cb_character_bios_l_simp_chinese.yml'):
             self.assertTrue((mod / name).is_file(), name)
         cl = (mod / 'in_game/common/customizable_localization/cb_character_bios.txt').read_text(encoding='utf-8-sig')
-        self.assertIn('this = character:eng_edward_iii', cl)
+        self.assertIn('exists = character:eng_edward_iii this = character:eng_edward_iii', cl)
         self.assertNotIn('event_only', cl)
         build.verify(self.root, out)
         with self.assertRaises(FileExistsError):
             build.build(self.root, out)
+
+    def test_match_rules_attach_event_person_last(self):
+        (self.root / 'data' / 'match_rules.json').write_text(json.dumps(
+            {'_说明': 'x', 'event_only': ['character_name = name_john', 'birth_location ?= location:calw']}), encoding='utf-8')
+        out = self.tmp / 'dist' / 'm'
+        r = build.build(self.root, out)
+        self.assertEqual((r['characters'], r['not_attachable']), (3, 0))
+        cl = (out / build.load_config(self.root)['mod_id'] / 'in_game/common/customizable_localization/cb_character_bios.txt'
+              ).read_text(encoding='utf-8-sig')
+        self.assertIn('trigger = { character_name = name_john birth_location ?= location:calw }', cl)
+        self.assertLess(cl.index('cb_bio_fra_minor'), cl.index('cb_bio_event_only'))
+        (self.root / 'data' / 'match_rules.json').write_text(json.dumps({'event_only': ['x = "y"']}), encoding='utf-8')
+        with self.assertRaises(ValueError):
+            build.build(self.root, self.tmp / 'dist' / 'm2')
 
     def test_verify_detects_tampering(self):
         out = self.tmp / 'dist' / 'r'

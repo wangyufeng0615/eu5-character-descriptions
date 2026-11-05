@@ -1,0 +1,10 @@
+{
+  "_说明": "原型：没有固定脚本 ID 的事件人物，用游戏能检查的属性认人。键是人物 ID，值是写进可定制本地化 trigger 的条件。2026-11-05 试做，未实测。",
+  "rt_imperial_examination_events_6_yang_ming_wang": ["character_name = name_yang22.name_ming", "birth_location ?= location:yuyao"],
+  "rt_flavor_chi_23_meng_fan": ["character_name = name_meng4", "birth_location ?= location:kaifeng"],
+  "rt_flavor_boh_6_johan_kepler": ["character_name = name_john", "birth_location ?= location:calw", "current_year >= { value = age_in_years add = 1571 }", "current_year <= { value = age_in_years add = 1572 }"],
+  "rt_flavor_pal_2_johan_reuchlin": ["character_name = name_john", "birth_location ?= location:calw", "current_year >= { value = age_in_years add = 1455 }", "current_year <= { value = age_in_years add = 1456 }"],
+  "rt_flavor_nov_22_martha_boretskaya": ["character_name = name_martha", "has_trait = intricate_web_weaver"],
+  "rt_flavor_ned_4_peter_post": ["character_name = name_peter", "artist_type = architect", "has_estate = estate_type:burghers_estate", "current_year >= { value = age_in_years add = 1608 }", "current_year <= { value = age_in_years add = 1609 }"],
+  "rt_d009_sephardi_diaspora_5_joseph_nasi": ["character_name = name_joseph", "culture = culture:sephardi", "religion = religion:judaism", "has_estate = estate_type:burghers_estate", "employer ?= { dynamic_historical_event_fired = d009_sephardi_diaspora.5 }"]
+}

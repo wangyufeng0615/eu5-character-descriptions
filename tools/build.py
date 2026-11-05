@@ -33,6 +33,8 @@ MOD_ROOT = Path(os.environ.get('USERPROFILE') or Path.home()) / 'Documents' / 'P
 LICENSE_FILES = ('LICENSE', 'LICENSES/MIT.txt', 'LICENSES/CC-BY-SA-4.0.txt', 'CREDITS.md')
 PLAYER_DOCS = {'README.md': 'workshop/player-readme.en.md', 'README.zh-CN.md': 'workshop/player-readme.zh-CN.md'}
 GUI = 'in_game/gui/zz_cb_character_tooltips.gui'
+# 游戏按 32 位哈希查本地化键，个别键会和原版撞车（error.log 报 Localization key hash collision），撞了就在这里换名。
+KEY_RENAMES = {'dan_sorensen': 'cb_bio_dan_sorensen_b'}
 SPECIAL = set('[]$#"\\')
 VERSION_RE = re.compile(r'[0-9]+\.[0-9]+\.[0-9]+')
 
@@ -73,6 +75,7 @@ def load_config(root):
 def load_rows(root, only_written=False):
     """返回 (要放进模组的人, 没有固定脚本 ID 暂时挂不上的人数)。"""
     rows, hidden, seen = [], 0, set()
+    rules = load_match_rules(root)
     with open(root / 'data' / 'bios.jsonl', encoding='utf-8') as fh:
         for n, line in enumerate(fh, 1):
             r = json.loads(line)
@@ -85,8 +88,10 @@ def load_rows(root, only_written=False):
             if only_written and r['verdict'] != 'written':
                 continue
             if not r.get('displayable'):
-                hidden += 1
-                continue
+                if cid not in rules:
+                    hidden += 1
+                    continue
+                r['_match'] = rules[cid]
             for lang in ('en', 'zh'):
                 t = r.get(lang)
                 if not isinstance(t, str) or not t.strip() or '\n' in t or SPECIAL & set(t) \
@@ -100,7 +105,28 @@ def load_rows(root, only_written=False):
                 if p.scheme not in ('http', 'https') or not p.hostname or p.username or p.password:
                     raise ValueError(f'{cid} 的来源网址不合规：{u}')
             rows.append(r)
-    return sorted(rows, key=lambda r: r['id']), hidden
+    # 按属性认人的条目排在最后：可定制本地化取第一条成立的，带固定 ID 的人优先用自己的介绍
+    return sorted(rows, key=lambda r: ('_match' in r, r['id'])), hidden
+
+
+def load_match_rules(root):
+    """data/match_rules.json：没有固定脚本 ID 的事件人物，按名字键、出生地等属性认人的条件。"""
+    p = root / 'data' / 'match_rules.json'
+    if not p.exists():
+        return {}
+    rules = {k: v for k, v in json.loads(p.read_text(encoding='utf-8')).items() if not k.startswith('_')}
+    for cid, conds in rules.items():
+        if not isinstance(conds, list) or not conds or not all(
+                isinstance(c, str) and c.strip() and re.fullmatch(r'[A-Za-z0-9_:.?=<>{} \-]+', c) for c in conds):
+            raise ValueError(f'match_rules.json 里 {cid} 的条件不合规')
+    return rules
+
+
+def trigger_of(r):
+    """先判断人物是否存在：事件人物在事件触发前不存在，直接比较 character:ID 会每次悬停都报错。"""
+    if '_match' in r:
+        return '{ ' + ' '.join(r['_match']) + ' }'
+    return f'{{ exists = character:{r["id"]} this = character:{r["id"]} }}'
 
 
 def check_game(cfg, game_root):
@@ -112,6 +138,10 @@ def check_game(cfg, game_root):
         b = re.search(r'"buildid"\s+"(\d+)"', m.read_text(encoding='utf-8'))
         out.update(game_build=int(b.group(1)) if b else None, checked_build=cfg.get('game_build_checked'))
     return out
+
+
+def loc_key(r):
+    return KEY_RENAMES.get(r['id'], f'cb_bio_{r["id"]}')
 
 
 def loc_line(key, text):
@@ -129,12 +159,12 @@ def payload(root, cfg, rows):
     files[GUI] = project_file(root, 'mod_template/' + GUI).read_bytes()
     cl = ['cb_character_bio = {', '\ttype = character']
     for r in rows:
-        cl += ['\ttext = {', f'\t\tlocalization_key = cb_bio_{r["id"]}', f'\t\ttrigger = {{ this = character:{r["id"]} }}',
+        cl += ['\ttext = {', f'\t\tlocalization_key = {loc_key(r)}', f'\t\ttrigger = {trigger_of(r)}',
                '\t}']
     cl += ['\ttext = {', '\t\tlocalization_key = cb_bio_none', '\t\tfallback = yes', '\t}', '}', '']
     files['in_game/common/customizable_localization/cb_character_bios.txt'] = '\n'.join(cl).encode('utf-8-sig')
     for lang, key in (('english', 'en'), ('simp_chinese', 'zh')):
-        body = f'l_{lang}:\n' + loc_line('cb_bio_none', '') + ''.join(loc_line(f'cb_bio_{r["id"]}', r[key].strip())
+        body = f'l_{lang}:\n' + loc_line('cb_bio_none', '') + ''.join(loc_line(loc_key(r), r[key].strip())
                                                                       for r in rows)
         files[f'in_game/localization/{lang}/cb_character_bios_l_{lang}.yml'] = body.encode('utf-8-sig')
     for name in LICENSE_FILES:
