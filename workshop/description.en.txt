@@ -24,6 +24,7 @@ About the use of AI: models such as GPT 6.1 Terra and DeepSeek Flash gathered th
 [*]English + Chinese
 [*]Only adds text; no effect on other features or game performance
 [*]Can be added to an existing save
+[*]Ironman and achievement compatible
 [/list]
 
 If you find a mistake, please leave a comment. I'll keep maintaining and updating this mod! Some characters aren't covered yet because of how EU5's code creates them, which makes them hard to show. I'll keep working on it until every one is covered.
