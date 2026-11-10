@@ -380,6 +380,8 @@ def main():
         print(json.dumps({'verified': True, 'version': r['version'], 'files': len(r['files']),
                           'archive_sha256': r['archive_sha256']}, ensure_ascii=False))
     elif a.install:
+        # 开发副本和工坊订阅的正式版同名，播放集里分不清；只给开发安装的名字加后缀，正式构建不受影响
+        cfg['name'] = f"{cfg['name']} (local dev)"
         rows, hidden = _rows(ROOT, cfg)
         out = ROOT / 'dist' / 'dev' / cfg['mod_id']
         if out.exists():
