@@ -93,13 +93,23 @@ class TestBuild(Fixture):
         with self.assertRaises(ValueError):
             build.verify(self.root, out)
 
+    def test_paragraphs_become_loc_newlines(self):
+        self.write_rows([{**ROWS[0], 'en': 'First part.\n\nSecond part.', 'zh': '第一段。\n\n第二段。'}])
+        rows, _ = build.load_rows(self.root)
+        files = build.payload(self.root, build.load_config(self.root), rows)
+        en = files['in_game/localization/english/cb_character_bios_l_english.yml'].decode('utf-8-sig')
+        zh = files['in_game/localization/simp_chinese/cb_character_bios_l_simp_chinese.yml'].decode('utf-8-sig')
+        self.assertIn(' cb_bio_eng_edward_iii: "First part.\\n\\nSecond part."\n', en)
+        self.assertIn(' cb_bio_eng_edward_iii: "第一段。\\n\\n第二段。"\n', zh)
+
     def test_only_written(self):
         rows, hidden = build.load_rows(self.root, only_written=True)
         self.assertEqual([r['id'] for r in rows], ['eng_edward_iii'])
 
     def test_rejects_bad_rows(self):
         for bad in ({**ROWS[0], 'sources': []}, {**ROWS[0], 'en': 'has [brackets]'}, {**ROWS[0], 'zh': '两行\n文字'},
-                    {**ROWS[0], 'verdict': 'unidentified'}):
+                    {**ROWS[0], 'verdict': 'unidentified'}, {**ROWS[0], 'en': 'Three\n\n\nnewlines.'},
+                    {**ROWS[0], 'en': 'Two\n\nparagraphs.'}):
             self.write_rows([bad])
             with self.assertRaises(ValueError):
                 build.load_rows(self.root)

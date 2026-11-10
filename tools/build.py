@@ -93,10 +93,10 @@ def load_rows(root, only_written=False):
                     continue
                 r['_match'] = rules[cid]
             for lang in ('en', 'zh'):
-                t = r.get(lang)
-                if not isinstance(t, str) or not t.strip() or '\n' in t or SPECIAL & set(t) \
-                        or any(ord(c) < 32 for c in t):
-                    raise ValueError(f'{cid} 的 {lang} 正文为空、换行或含游戏指令字符，先回研究工程修')
+                if not plain_ok(r.get(lang)):
+                    raise ValueError(f'{cid} 的 {lang} 正文为空、有段内换行或含游戏指令字符，先回研究工程修')
+            if paras(r['en']) != paras(r['zh']):
+                raise ValueError(f'{cid} 的中英文段数不同，先回研究工程修')
             src = r.get('sources')
             if not isinstance(src, list) or not src:
                 raise ValueError(f'{cid} 没有资料来源（署名要用）；研究工程重新导出')
@@ -140,6 +140,24 @@ def check_game(cfg, game_root):
     return out
 
 
+def paras(t):
+    return t.strip().count('\n\n') + 1
+
+
+def plain_ok(t):
+    """正文只允许用一个空行分段；段内换行、控制字符、游戏指令字符一律不行。"""
+    if not isinstance(t, str) or not t.strip():
+        return False
+    parts = t.strip().split('\n\n')
+    return all(p.strip() == p and p and '\n' not in p and not SPECIAL & set(p) and all(ord(c) >= 32 for c in p)
+               for p in parts)
+
+
+def loc_text(t):
+    """段落之间的空行写成本地化里的 \\n\\n，游戏显示为空一行。"""
+    return t.strip().replace('\n\n', '\\n\\n')
+
+
 def loc_key(r):
     return KEY_RENAMES.get(r['id'], f'cb_bio_{r["id"]}')
 
@@ -164,7 +182,7 @@ def payload(root, cfg, rows):
     cl += ['\ttext = {', '\t\tlocalization_key = cb_bio_none', '\t\tfallback = yes', '\t}', '}', '']
     files['in_game/common/customizable_localization/cb_character_bios.txt'] = '\n'.join(cl).encode('utf-8-sig')
     for lang, key in (('english', 'en'), ('simp_chinese', 'zh')):
-        body = f'l_{lang}:\n' + loc_line('cb_bio_none', '') + ''.join(loc_line(loc_key(r), r[key].strip())
+        body = f'l_{lang}:\n' + loc_line('cb_bio_none', '') + ''.join(loc_line(loc_key(r), loc_text(r[key]))
                                                                       for r in rows)
         files[f'in_game/localization/{lang}/cb_character_bios_l_{lang}.yml'] = body.encode('utf-8-sig')
     for name in LICENSE_FILES:
