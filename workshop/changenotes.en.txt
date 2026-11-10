@@ -1,2 +1,2 @@
-1.0.3
-Long biographies now scroll inside the character tooltip, so the tooltip no longer runs off the bottom of the screen.
+1.0.4
+Biographies are now split into two or three paragraphs and tightened by about 15%, so they are easier to read in the tooltip. Every rewritten entry was checked against the previous text; a number of small errors were corrected along the way.
