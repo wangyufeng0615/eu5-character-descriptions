@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4 — 2026-11-10
+
+- Biographies are now split into two or three paragraphs and tightened by about 15 percent; every rewritten entry was checked against the previous text and a number of small errors were corrected.
+
 ## 1.0.3 — 2026-11-05
 
 - Long biographies now scroll inside the character tooltip, so the tooltip no longer runs off the bottom of the screen.
