@@ -37,6 +37,7 @@ If you find a mistake, please leave a comment. I'll keep maintaining and updatin
 
 [h2]Update history[/h2]
 [list]
+[*]1.0.5: Chinese text only: each person is now named consistently across all Chinese biographies (about 1,250 entries standardized), and stray traditional characters were converted to simplified Chinese.
 [*]1.0.4: Biographies are now split into two or three paragraphs and are about 15% shorter, so they are easier to read in the tooltip; every rewritten entry was checked against the previous text, and a number of small errors were corrected along the way.
 [*]1.0.3: Long biographies now scroll inside the tooltip, so it no longer runs off the screen.
 [*]1.0.2: Researched 208 rulers again, turning 105 short or missing entries into full biographies; event characters such as Wang Yangming now show a biography; fixed errors logged when hovering characters.

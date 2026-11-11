@@ -1,2 +1,2 @@
-1.0.4
-Biographies are now split into two or three paragraphs and tightened by about 15%, so they are easier to read in the tooltip. Every rewritten entry was checked against the previous text; a number of small errors were corrected along the way.
+1.0.5
+Chinese text only: each person is now named consistently across all Chinese biographies (about 1,250 entries standardized), and stray traditional characters were converted to simplified Chinese.
