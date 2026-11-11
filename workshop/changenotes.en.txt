@@ -1,2 +1,2 @@
-1.0.5
-Chinese text only: each person is now named consistently across all Chinese biographies (over a thousand entries standardized), and stray traditional characters were converted to simplified Chinese.
+1.0.6
+Mostly Chinese text: a second pass made names consistent, covering short forms and family members missed in 1.0.5, with one spelling per family and place names inside names matching the game's own; also corrected Margaret of Lusignan's marriage year (both languages).
