@@ -47,7 +47,7 @@ python -B tools\build.py --verify dist\<新目录>
 2. **准备版本**：`python -B tools\release.py 1.0.0 --note "First public release." --install --commit`。它升版本号、写 `CHANGELOG.md`、跑测试和检查、构建到 `dist\release-1.0.0\`、核对、装进游戏并提交。失败会把版本号和 CHANGELOG 改回去。`--dry-run` 只检查和构建。
 3. **第一次上传（已做过）**：2026-11-04 用 `tools/steam_create.py 1.0.0` 建了条目（私密、英文页面、主封面、标签），Steam 一返回编号就写进 `project.json`；接着 `steam_page.py --descriptions` 补中文标题描述、`--assets` 补中文封面。都用计划任务在桌面会话里跑（`schtasks /create ... /ru nsh2o /it` 再 `/run`，跑完删任务），记录在 `dist/create-1.0.0.*`。`steam_create.py` 在已有编号时直接拒绝。
 4. **之后的更新**：先 `release.py <新版本>`，再在登录了 Steam 的桌面会话里 `python -B tools\steam_upload.py <版本> --upload --notes-file workshop\changenotes.en.txt --output dist\upload-<版本>.json`；页面文案和封面用 `tools\steam_page.py`。这两个工具改自 EU5 地块发布工程，只更新已有条目，不建条目、不改可见性、不接受条款；远程触发的办法见 EU5 地块发布工程 `docs/PUBLISHING.md`。
-5. **更新说明**：`workshop/changenotes.*.txt` 第一行写版本号；中文更新说明要在网页上补。
+5. **更新说明**：`workshop/changenotes.*.txt` 第一行写版本号，`description.*.txt` 的「更新记录」加一行，不写确切篇数（会被文案数量检查拦）。`steam_upload.py` 只带英文说明，上传后用 `steam_page.py --descriptions` 推页面文案（同样用 `schtasks /it` 放进桌面会话）。中文更新说明由 agent 在 MacBook 上用 Claude in Chrome（已登录 Steam）补，作者不操作：打开 `https://steamcommunity.com/sharedfiles/filedetails/changelog/3833397845`，点该版本的“编辑”，语言下拉选“简体中文”（页面带 `?language=6` 重载，文本框预填英文），换成 `changenotes.zh-CN.txt` 的内容后保存，回改动说明页确认中文显示。MacBook 的内置浏览器打不开 steamcommunity.com；核对上传结果可用公开接口 `ISteamRemoteStorage/GetPublishedFileDetails`（看 `time_updated`、`file_size`、`description`）。
 
 **还要作者确认的事**：是否兼容成就（模组加了 `in_game/common` 下的可定制本地化，EU5 地块模组只有本地化和界面文件，情况不同，没实测）；浮窗性能；427 个没有固定脚本 ID 的事件人物还挂不上（研究工程 `AGENTS.md` 里的 `on_character_created` 方案未实测）；改公开前进游戏实看中英文浮窗、补截图。
 
