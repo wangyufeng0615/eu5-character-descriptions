@@ -1,2 +1,2 @@
 1.0.5
-Chinese text only: each person is now named consistently across all Chinese biographies (about 1,250 entries standardized), and stray traditional characters were converted to simplified Chinese.
+Chinese text only: each person is now named consistently across all Chinese biographies (over a thousand entries standardized), and stray traditional characters were converted to simplified Chinese.
