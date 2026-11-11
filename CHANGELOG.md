@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5 — 2026-11-11
+
+- Chinese text only: each person is now named consistently across all Chinese biographies (over a thousand entries standardized), and stray traditional characters were converted to simplified Chinese.
+
 ## 1.0.4 — 2026-11-10
 
 - Biographies are now split into two or three paragraphs and tightened by about 15 percent; every rewritten entry was checked against the previous text and a number of small errors were corrected.
