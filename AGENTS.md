@@ -7,7 +7,7 @@
 | | 位置 | 管什么 |
 |---|---|---|
 | 研究工程 | Mac mini `~/personal/paradox-mods/eu5-characters/research`（主副本，GitHub 私有库 `wangyufeng0615/eu5-character-bios-research`）；MacBook 克隆在同一路径 | 8,715 个人物的身份卡、介绍、写作规则、批量写作调度器 |
-| 发布工程 | 本目录，Windows `V:\paradox-mods\eu5-characters\workshop`（本地 Git，暂无远端） | 构建、装进游戏、以后的工坊文案和发布 |
+| 发布工程 | 本目录，Windows `V:\paradox-mods\eu5-characters\workshop`（GitHub 公开库 `wangyufeng0615/eu5-character-descriptions`，2026-11-12 建；Windows 连不上 GitHub，经 MacBook 转推） | 构建、装进游戏、以后的工坊文案和发布 |
 | 旧数据 | `V:\paradox-mods\eu5-characters\archive\eu5-character-biographies` | 2026-11-01 第一轮人物清点的产物，只作追溯 |
 
 ## 数据怎么流动
@@ -48,6 +48,7 @@ python -B tools\build.py --verify dist\<新目录>
 3. **第一次上传（已做过）**：2026-11-04 用 `tools/steam_create.py 1.0.0` 建了条目（私密、英文页面、主封面、标签），Steam 一返回编号就写进 `project.json`；接着 `steam_page.py --descriptions` 补中文标题描述、`--assets` 补中文封面。都用计划任务在桌面会话里跑（`schtasks /create ... /ru nsh2o /it` 再 `/run`，跑完删任务），记录在 `dist/create-1.0.0.*`。`steam_create.py` 在已有编号时直接拒绝。
 4. **之后的更新**：先 `release.py <新版本>`，再在登录了 Steam 的桌面会话里 `python -B tools\steam_upload.py <版本> --upload --notes-file workshop\changenotes.en.txt --output dist\upload-<版本>.json`；页面文案和封面用 `tools\steam_page.py`。这两个工具改自 EU5 地块发布工程，只更新已有条目，不建条目、不改可见性、不接受条款；远程触发的办法见 EU5 地块发布工程 `docs/PUBLISHING.md`。
 5. **更新说明**：`workshop/changenotes.*.txt` 第一行写版本号，`description.*.txt` 的「更新记录」加一行，不写确切篇数（会被文案数量检查拦）。`steam_upload.py` 只带英文说明，上传后用 `steam_page.py --descriptions` 推页面文案（同样用 `schtasks /it` 放进桌面会话）。中文更新说明由 agent 在 MacBook 上用 Claude in Chrome（已登录 Steam）补，作者不操作：打开 `https://steamcommunity.com/sharedfiles/filedetails/changelog/3833397845`，点该版本的“编辑”，语言下拉选“简体中文”（页面带 `?language=6` 重载，文本框预填英文），换成 `changenotes.zh-CN.txt` 的内容后保存，回改动说明页确认中文显示。MacBook 的内置浏览器打不开 steamcommunity.com；核对上传结果可用公开接口 `ISteamRemoteStorage/GetPublishedFileDetails`（看 `time_updated`、`file_size`、`description`）。
+6. **推到 GitHub**：在 MacBook 上运行研究工程 `tools/push_public.sh`（把本目录 main 打成 bundle、经本机快进推到 GitHub，再对齐这里的 `origin/main`）；发版时加 `--tag <版本>`，推送 `v<版本>` 标签后 `.github/workflows/release.yml` 从该提交构建、核对，并把 ZIP 附到 GitHub Release（说明由 `tools/release_notes.py` 从 CHANGELOG 生成）。每次推送 `check.yml` 在 Ubuntu 和 Windows 上跑检查、测试和构建。核对 Release 时比 ZIP 里各文件的哈希和本地构建回执，不比整包哈希。
 
 **还要作者确认的事**：是否兼容成就（模组加了 `in_game/common` 下的可定制本地化，EU5 地块模组只有本地化和界面文件，情况不同，没实测）；浮窗性能；427 个没有固定脚本 ID 的事件人物还挂不上（研究工程 `AGENTS.md` 里的 `on_character_created` 方案未实测）；改公开前进游戏实看中英文浮窗、补截图。
 
@@ -67,6 +68,8 @@ python -B tools\build.py --verify dist\<新目录>
 | `workshop/assets/` | 封面母版 `cover-master.*.png`（Codex 生图模型按 EU5 地块封面的风格画成，提示词在 `cover-prompt.*.txt`）、导出的 `cover.jpg`、`cover.zh-CN.jpg`、`thumbnail.png` |
 | `LICENSE`、`LICENSES/`、`CREDITS.md` | 工具 MIT、正文 CC BY-SA 4.0（照 EU5 地块模组的选择），署名和第三方说明；都会打进模组 |
 | `CHANGELOG.md` | 版本记录，由 `release.py` 写 |
+| `README.md`、`.github/workflows/`、`.gitattributes` | GitHub 公开页的中英文说明；推送时检查构建（`check.yml`），推 `vX.Y.Z` 标签时发布 Release（`release.yml`）；`* -text` 保证文件逐字节不变 |
+| `tools/release_notes.py` | GitHub Release 说明：CHANGELOG 条目 ＋ 安装步骤 ＋ ZIP 的 SHA-256 |
 
 ## 技术要点
 

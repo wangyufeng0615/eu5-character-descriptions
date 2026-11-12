@@ -29,6 +29,9 @@
 
 如果发现错误，欢迎留言，我会持续维护更新这个 mod！当前尚未覆盖的人物，有些是因为 EU5 游戏代码的问题，不太好展示，我会持续完善，直到全部覆盖。
 
+[h2]源码与下载[/h2]
+GitHub：[url=https://github.com/wangyufeng0615/eu5-character-descriptions]github.com/wangyufeng0615/eu5-character-descriptions[/url]
+
 [h2]我的其他 MOD[/h2]
 [list]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3830305546][b]所有地块的描述[/b][/url]（欧陆风云5）：为 EU5 地图上全部 28,316 个地块补上中英文介绍，兼容成就，已有 2,000+ 订阅。[b]强烈推荐和本 MOD 一起订阅！[/b]
