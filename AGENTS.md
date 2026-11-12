@@ -75,7 +75,8 @@ python -B tools\build.py --verify dist\<新目录>
 
 - 可定制本地化 `cb_character_bio` 按 `this = character:<ID>` 给每人一条文本，加一个空字符串兜底；浮窗模板用 `StringIsEmpty` 判断，没有介绍的人不显示这块。
 - **游戏内超链接**：`data/bios.jsonl` 每行另有 `en_rich`、`zh_rich`，是研究工程 `tools/autolink.py` 给正文加了人物、地点、国家、家族、文化、宗教链接的版本（写法照原版本地化，规则见研究工程 `AGENTS.md`「游戏内超链接」）。`project.json` 的 `links` 决定正式构建用哪一份，现在是 `false`（还没进游戏验收）；`--check`、`--install` 可以用 `--links on|off` 临时切换。不管开不开，`*_rich` 都要通过 `rich_ok`：只放行那几种写法，去掉链接后和纯文本逐字一致，所以链接只会加标记、不会改动正文。2026-11-12 起替代了 11-05 的五人试验（`experiments/link_test.json` 已删）。
+- **浮窗里的链接要能悬停（2026-11-12 游戏内实测）**：原版 `TooltipScrolledFlavorTextBlock` 带 `tooltip_delayed_block`（延迟显示），普通模式下这种块里的链接显示正常但悬停不弹浮窗（`-debug_mode` 下却能弹，调试模式验收会误判）。模板改为内联同样外观的 `TooltipListBase` + `TooltipScrolledContentSection`（布纹底、`#flavor`、框内滚动 360），去掉延迟显示，传记随浮窗立即出现。@ 变量只在定义它的文件里有效，边距直接写 10（原版 `@tooltip_inner_margin`）。实测（1.4.7，普通模式，中英文）：人物、已故人物、地点、开局无领土国家、家族链接都能逐层弹出浮窗，四层嵌套正常；动态地名"卡塞尔"（基础名"卡塞勒"）按所属国语言显示，和推算一致；error.log 无相关报错，浮窗无明显卡顿。
 - `displayable` 为假的是没有固定脚本 ID 的事件人物，游戏里挂不上，构建时跳过。挂接方案（`on_character_created` 钩子）见研究工程 `AGENTS.md`，还没实测。
 - **游戏开着时不要直接覆盖模组文件**：游戏会监视文件并自动重载，读到写了一半的文件会让人物侧栏失效。`build.py --install` 先写到 `mod\.<目录名>.new`、核对哈希，再整体改名替换。出问题时冷启动游戏可以恢复。2026-11-12 实测：游戏开着时 Windows 不让改名模组目录（`os.replace` 报 WinError 5），安装中止，旧目录原样保留，只留下 `.character_descriptions.new`（下次安装会清掉）。所以要关了游戏再装。
 - 浮窗模板改写的是原版 `in_game/gui/shared/character_tooltips.gui`；游戏更新改了这个文件（`--check --game-root` 会报 `tooltip_unchanged: false`），要重新合并，再更新 `project.json` 里的哈希和构建号。
-- 几千条介绍对浮窗性能的影响还没在游戏里测过，装好全量后要看一下浮窗有没有变卡。
+- 浮窗性能：2026-11-12 带全量链接（7,616 篇）实测，悬停和逐层弹出没有明显卡顿，没做量化测量。

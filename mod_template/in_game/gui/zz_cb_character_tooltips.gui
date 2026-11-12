@@ -354,11 +354,36 @@ template Character_tooltip {
 		
 			# eu5_character_bios_test: historical biography
 			# 长生平在框内滚动，浮窗不会撑出屏幕；写法同原版阶层浮窗（government_tooltips.gui）
-			TooltipScrolledFlavorTextBlock = {
+			# 和原版 TooltipScrolledFlavorTextBlock 同样的外观（布纹底、#flavor、框内滚动），但不用 tooltip_delayed_block：
+			# 2026-11-12 游戏内实测，普通模式下延迟显示块里的链接悬停不弹浮窗（调试模式下能弹），去掉延迟后正常
+			TooltipListBase = {
 				visible = "[Not(StringIsEmpty(Character.Custom('cb_character_bio')))]"
-				blockoverride "block_scrollarea" { maximumsize = { -1 360 } }
-				blockoverride "text" {
-					text = "[Character.Custom('cb_character_bio')]"
+				blockoverride "bg_listbase" {
+					using = bg_text_mask_container_grey
+					background = {
+						using = tile_frame_squared_texture
+						using = color_bg_brown
+						modify_texture = {
+							using = overlay_cloth_texture
+							blend_mode = overlay
+							alpha = 0.3
+						}
+					}
+				}
+				TooltipScrolledContentSection = {
+					blockoverride "block_scrollarea" { maximumsize = { -1 360 } }
+					blockoverride "section_content" {
+						vbox = {
+							set_parent_dimension_to_minimum = height
+							layoutpolicy_horizontal = expanding
+							margin = { 10 10 }  # 原版 @tooltip_inner_margin = 10（@ 变量只在定义它的文件里有效）
+							textbox = {
+								using = tooltip_text_block_template
+								default_format = "#flavor"
+								text = "[Character.Custom('cb_character_bio')]"
+							}
+						}
+					}
 				}
 			}
 		}
@@ -393,11 +418,36 @@ template dead_character_tooltip {
 		
 			# eu5_character_bios_test: historical biography
 			# 长生平在框内滚动，浮窗不会撑出屏幕；写法同原版阶层浮窗（government_tooltips.gui）
-			TooltipScrolledFlavorTextBlock = {
+			# 和原版 TooltipScrolledFlavorTextBlock 同样的外观（布纹底、#flavor、框内滚动），但不用 tooltip_delayed_block：
+			# 2026-11-12 游戏内实测，普通模式下延迟显示块里的链接悬停不弹浮窗（调试模式下能弹），去掉延迟后正常
+			TooltipListBase = {
 				visible = "[Not(StringIsEmpty(Character.Custom('cb_character_bio')))]"
-				blockoverride "block_scrollarea" { maximumsize = { -1 360 } }
-				blockoverride "text" {
-					text = "[Character.Custom('cb_character_bio')]"
+				blockoverride "bg_listbase" {
+					using = bg_text_mask_container_grey
+					background = {
+						using = tile_frame_squared_texture
+						using = color_bg_brown
+						modify_texture = {
+							using = overlay_cloth_texture
+							blend_mode = overlay
+							alpha = 0.3
+						}
+					}
+				}
+				TooltipScrolledContentSection = {
+					blockoverride "block_scrollarea" { maximumsize = { -1 360 } }
+					blockoverride "section_content" {
+						vbox = {
+							set_parent_dimension_to_minimum = height
+							layoutpolicy_horizontal = expanding
+							margin = { 10 10 }  # 原版 @tooltip_inner_margin = 10（@ 变量只在定义它的文件里有效）
+							textbox = {
+								using = tooltip_text_block_template
+								default_format = "#flavor"
+								text = "[Character.Custom('cb_character_bio')]"
+							}
+						}
+					}
 				}
 			}
 		}
