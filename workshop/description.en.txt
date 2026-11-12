@@ -22,6 +22,7 @@ About the use of AI: models such as GPT 6.1 Terra and DeepSeek Flash gathered th
 [h2]Features[/h2]
 [list]
 [*]English + Chinese
+[*]Hover the people, places and countries named in a biography to open their own tooltips
 [*]Only adds text; no effect on other features or game performance
 [*]Can be added to an existing save
 [*]Ironman and achievement compatible
@@ -40,6 +41,7 @@ If you find a mistake, please leave a comment. I'll keep maintaining and updatin
 
 [h2]Update history[/h2]
 [list]
+[*]1.0.7: Biographies now contain links: hover a person, place, country, dynasty, culture or religion mentioned in a biography to open its own tooltip, including ancestors who died before 1337. The biography now appears in the tooltip right away instead of after a short delay.
 [*]1.0.6: Mostly Chinese text: a second pass made names consistent, covering short forms and family members missed in 1.0.5, with one spelling per family and place names inside names matching the game's own; also corrected Margaret of Lusignan's marriage year (both languages).
 [*]1.0.5: Chinese text only: each person is now named consistently across all Chinese biographies (over a thousand entries standardized), and stray traditional characters were converted to simplified Chinese.
 [*]1.0.4: Biographies are now split into two or three paragraphs and are about 15% shorter, so they are easier to read in the tooltip; every rewritten entry was checked against the previous text, and a number of small errors were corrected along the way.
