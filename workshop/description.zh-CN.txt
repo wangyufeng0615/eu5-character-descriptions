@@ -48,9 +48,3 @@ GitHub：[url=https://github.com/wangyufeng0615/eu5-character-descriptions]githu
 [*]1.0.1：重写 1337 年开局在世的 663 位君主、继承人和摄政的生平。
 [*]1.0.0：首次发布。
 [/list]
-
-[h2]致谢[/h2]
-感谢以下玩家在评论区的反馈：
-[list]
-[*][url=https://steamcommunity.com/profiles/76561198427671612]@argentinonómade[/url]、[url=https://steamcommunity.com/profiles/76561198058320298]@Wazter[/url]：希望推出西班牙语版
-[/list]
