@@ -39,6 +39,8 @@ class Fixture(unittest.TestCase):
             dst.parent.mkdir(parents=True, exist_ok=True)
             (shutil.copytree if src.is_dir() else shutil.copyfile)(src, dst)
         cfg = json.loads((self.root / 'project.json').read_text(encoding='utf-8'))
+        cfg['links'] = False  # 样例数据没有 *_rich；链接另有专门的测试
+        (self.root / 'project.json').write_text(json.dumps(cfg, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         (self.root / cfg['thumbnail_file']).parent.mkdir(parents=True, exist_ok=True)
         (self.root / cfg['thumbnail_file']).write_bytes(tiny_png())
         self.write_rows(ROWS)
