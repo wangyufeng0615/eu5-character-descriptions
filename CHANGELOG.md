@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.7 — 2026-11-12
+
+- Biographies now contain links: hover a person, place, country, dynasty, culture or religion mentioned in a biography to open its own tooltip, including ancestors who died before 1337. The biography now appears in the tooltip right away instead of after a short delay.
+
 ## 1.0.6 — 2026-11-12
 
 - Mostly Chinese text: a second pass made names consistent, covering short forms and family members missed in 1.0.5, with one spelling per family and place names inside names matching the game's own; also corrected Margaret of Lusignan's marriage year (both languages).
