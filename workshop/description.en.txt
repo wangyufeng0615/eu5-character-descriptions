@@ -45,3 +45,9 @@ If you find a mistake, please leave a comment. I'll keep maintaining and updatin
 [*]1.0.1: Rewrote the biographies of 663 rulers, heirs and regents alive at the 1337 start.
 [*]1.0.0: First release.
 [/list]
+
+[h2]Thanks[/h2]
+Thanks to these players for their feedback in the comments:
+[list]
+[*][url=https://steamcommunity.com/profiles/76561198427671612]@argentinonómade[/url] and [url=https://steamcommunity.com/profiles/76561198058320298]@Wazter[/url]: asked for a Spanish translation
+[/list]
