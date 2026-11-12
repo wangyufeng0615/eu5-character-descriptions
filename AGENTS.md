@@ -25,7 +25,7 @@ tools/sync_workshop.sh --only-written                                           
 
 ```bat
 cd /d V:\paradox-mods\eu5-characters\workshop
-python -B tools\build.py --install [--only-written]    :: 构建到 dist\dev 并装进 文档\Paradox Interactive\Europa Universalis V\mod
+python -B tools\build.py --install [--only-written] [--links on|off]    :: 构建到 dist\dev 并装进 文档\Paradox Interactive\Europa Universalis V\mod
 ```
 
 同步脚本会把新数据提交到本目录的 Git，方便回退。2026-11-03 起模组 ID 从测试期的 `eu5_character_bios` 改为 `character_descriptions`，装到 `mod\character_descriptions`；旧的测试副本 `mod\eu5_character_bios_test` 还在，两个不要同时启用。
@@ -74,7 +74,8 @@ python -B tools\build.py --verify dist\<新目录>
 ## 技术要点
 
 - 可定制本地化 `cb_character_bio` 按 `this = character:<ID>` 给每人一条文本，加一个空字符串兜底；浮窗模板用 `StringIsEmpty` 判断，没有介绍的人不显示这块。
+- **游戏内超链接**：`data/bios.jsonl` 每行另有 `en_rich`、`zh_rich`，是研究工程 `tools/autolink.py` 给正文加了人物、地点、国家、家族、文化、宗教链接的版本（写法照原版本地化，规则见研究工程 `AGENTS.md`「游戏内超链接」）。`project.json` 的 `links` 决定正式构建用哪一份，现在是 `false`（还没进游戏验收）；`--check`、`--install` 可以用 `--links on|off` 临时切换。不管开不开，`*_rich` 都要通过 `rich_ok`：只放行那几种写法，去掉链接后和纯文本逐字一致，所以链接只会加标记、不会改动正文。2026-11-12 起替代了 11-05 的五人试验（`experiments/link_test.json` 已删）。
 - `displayable` 为假的是没有固定脚本 ID 的事件人物，游戏里挂不上，构建时跳过。挂接方案（`on_character_created` 钩子）见研究工程 `AGENTS.md`，还没实测。
-- **游戏开着时不要直接覆盖模组文件**：游戏会监视文件并自动重载，读到写了一半的文件会让人物侧栏失效。`build.py --install` 先写到 `mod\.<目录名>.new`、核对哈希，再整体改名替换。出问题时冷启动游戏可以恢复。
+- **游戏开着时不要直接覆盖模组文件**：游戏会监视文件并自动重载，读到写了一半的文件会让人物侧栏失效。`build.py --install` 先写到 `mod\.<目录名>.new`、核对哈希，再整体改名替换。出问题时冷启动游戏可以恢复。2026-11-12 实测：游戏开着时 Windows 不让改名模组目录（`os.replace` 报 WinError 5），安装中止，旧目录原样保留，只留下 `.character_descriptions.new`（下次安装会清掉）。所以要关了游戏再装。
 - 浮窗模板改写的是原版 `in_game/gui/shared/character_tooltips.gui`；游戏更新改了这个文件（`--check --game-root` 会报 `tooltip_unchanged: false`），要重新合并，再更新 `project.json` 里的哈希和构建号。
 - 几千条介绍对浮窗性能的影响还没在游戏里测过，装好全量后要看一下浮窗有没有变卡。

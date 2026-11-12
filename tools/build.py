@@ -3,7 +3,7 @@
 python -B tools/build.py --check                      # 只检查数据和配置
 python -B tools/build.py --output dist/<新目录>        # 构建模组文件夹、ZIP 和构建回执（目录必须是新的）
 python -B tools/build.py --verify dist/<目录>          # 按当前源文件重算，核对已构建的文件夹、ZIP 和回执
-python -B tools/build.py --install [--only-written]   # 开发用：构建到 dist/dev 并装进本机 EU5 模组目录
+python -B tools/build.py --install [--only-written] [--links on|off]   # 开发用：构建到 dist/dev 并装进本机 EU5 模组目录
 python -B tools/build.py --check --game-root "<EU5 安装目录>"   # 另外核对原版人物浮窗有没有随游戏更新变化
 
 数据由研究工程导出（研究工程 tools/sync_workshop.sh 在 MacBook 上一步做完导出、拷贝、构建、安装）。
@@ -67,13 +67,15 @@ def load_config(root):
     pid = cfg.get('publishedfileid')
     if pid is not None and (type(pid) is not int or pid <= 0):
         raise ValueError('publishedfileid 要么是 null（还没建工坊条目），要么是正整数')
+    if not isinstance(cfg.get('links', False), bool):
+        raise ValueError('links 要么 true（正文用带超链接的 *_rich），要么 false')
     if cfg.get('licenses') != {'tools': 'MIT', 'descriptions': 'CC-BY-SA-4.0'}:
         raise ValueError('licenses 和 LICENSE 文件不一致')
     return cfg
 
 
-def load_rows(root, only_written=False):
-    """返回 (要放进模组的人, 没有固定脚本 ID 暂时挂不上的人数)。"""
+def load_rows(root, only_written=False, links=False):
+    """返回 (要放进模组的人, 没有固定脚本 ID 暂时挂不上的人数)。links 为真时正文用带超链接的 en_rich / zh_rich。"""
     rows, hidden, seen = [], 0, set()
     rules = load_match_rules(root)
     with open(root / 'data' / 'bios.jsonl', encoding='utf-8') as fh:
@@ -97,6 +99,15 @@ def load_rows(root, only_written=False):
                     raise ValueError(f'{cid} 的 {lang} 正文为空、有段内换行或含游戏指令字符，先回研究工程修')
             if paras(r['en']) != paras(r['zh']):
                 raise ValueError(f'{cid} 的中英文段数不同，先回研究工程修')
+            r['_text'] = {}
+            for lang in ('en', 'zh'):
+                rich = r.get(f'{lang}_rich')
+                if rich is None and not links:
+                    r['_text'][lang] = r[lang]
+                elif not rich_ok(rich, r[lang]):
+                    raise ValueError(f'{cid} 的 {lang}_rich 和纯文本对不上或含不认识的写法，先回研究工程修 tools/autolink.py')
+                else:
+                    r['_text'][lang] = rich if links else r[lang]
             src = r.get('sources')
             if not isinstance(src, list) or not src:
                 raise ValueError(f'{cid} 没有资料来源（署名要用）；研究工程重新导出')
@@ -138,6 +149,28 @@ def check_game(cfg, game_root):
         b = re.search(r'"buildid"\s+"(\d+)"', m.read_text(encoding='utf-8'))
         out.update(game_build=int(b.group(1)) if b else None, checked_build=cfg.get('game_build_checked'))
     return out
+
+
+# 游戏内超链接：研究工程 tools/autolink.py 生成，只放行它的几种写法（都照原版本地化）。人物链接显示我们写的人名，
+# 其他对象显示游戏自己的名字（autolink 只在和原文完全一致时才链）。
+LINK = re.compile(
+    r"\[(?:ShowLocationName|ShowReligionName|ShowCultureName|ShowDynastyName)\('[A-Za-z0-9_]+'\)\]"
+    r"|\[GetCountry\('[A-Z][A-Z0-9]{2}'\)\.GetName\]"
+    r"|#TOOLTIP:CHARACTER,\[GetCharacter\('[A-Za-z0-9_][A-Za-z0-9_.\-]*'\)\.GetID\],X #L ([^\[\]$#\"\\\n]+)#!#!")
+
+
+def rich_ok(rich, plain):
+    """带链接的正文去掉链接后要和纯文本逐字一致：人物链接里的人名原样比对，对象链接只能顶替原文里一段非空、不跨段的文字。"""
+    if not isinstance(rich, str):
+        return False
+    pat, pos = [], 0
+    for m in LINK.finditer(rich):
+        pat.append(re.escape(rich[pos:m.start()]))
+        pat.append(re.escape(m.group(1)) if m.group(1) is not None else r'[^\n]+?')
+        pos = m.end()
+    pat.append(re.escape(rich[pos:]))
+    rest = LINK.sub('', rich)
+    return not SPECIAL & set(rest) and re.fullmatch(''.join(pat), plain) is not None
 
 
 def paras(t):
@@ -182,7 +215,7 @@ def payload(root, cfg, rows):
     cl += ['\ttext = {', '\t\tlocalization_key = cb_bio_none', '\t\tfallback = yes', '\t}', '}', '']
     files['in_game/common/customizable_localization/cb_character_bios.txt'] = '\n'.join(cl).encode('utf-8-sig')
     for lang, key in (('english', 'en'), ('simp_chinese', 'zh')):
-        body = f'l_{lang}:\n' + loc_line('cb_bio_none', '') + ''.join(loc_line(loc_key(r), loc_text(r[key]))
+        body = f'l_{lang}:\n' + loc_line('cb_bio_none', '') + ''.join(loc_line(loc_key(r), loc_text(r['_text'][key]))
                                                                       for r in rows)
         files[f'in_game/localization/{lang}/cb_character_bios_l_{lang}.yml'] = body.encode('utf-8-sig')
     for name in LICENSE_FILES:
@@ -237,34 +270,7 @@ def zip_name(cfg):
 
 
 def _rows(root, cfg):
-    rows, hidden = load_rows(root, cfg.get('only_written'))
-    return apply_link_test(root, rows), hidden
-
-
-# 超链接试验：data/link_test.json 给少数人物换上带链接的正文，只放行下面几种写法，其余游戏指令字符照旧拦截。
-LINK_TOKENS = re.compile(
-    r"\[(?:ShowLocationName|ShowReligionName|ShowCultureName|ShowDynastyName)\('[a-z0-9_]+'\)\]"
-    r"|\[GetCountry\('[A-Z0-9]{3}'\)\.GetName\]"
-    r"|\[GetCharacter\('[a-z0-9_]+'\)\.GetName\]"
-    r"|#TOOLTIP:(?:CHARACTER|LOCATION|COUNTRY|RELIGION),[A-Za-z0-9_]+ [^\[\]$#\"\\]+#!")
-
-
-def apply_link_test(root, rows):
-    p = root / 'data' / 'link_test.json'
-    if not p.exists():
-        return rows
-    tests = {k: v for k, v in json.loads(p.read_text(encoding='utf-8')).items() if not k.startswith('_')}
-    by_id = {r['id']: r for r in rows}
-    for cid, texts in tests.items():
-        if cid not in by_id:
-            raise ValueError(f'link_test.json 里的 {cid} 不在本次构建中')
-        for lang in ('en', 'zh'):
-            t = texts.get(lang)
-            rest = LINK_TOKENS.sub('', t) if isinstance(t, str) else ''
-            if not t or '\n' in t or SPECIAL & set(rest) or any(ord(c) < 32 for c in t):
-                raise ValueError(f'link_test.json 里 {cid} 的 {lang} 含不认识的指令写法')
-            by_id[cid][lang] = t
-    return rows
+    return load_rows(root, cfg.get('only_written'), cfg.get('links', False))
 
 
 def build(root, output):
@@ -285,7 +291,7 @@ def build(root, output):
     receipt = {'name': cfg['name'], 'mod_id': cfg['mod_id'], 'version': cfg['version'],
                'publishedfileid': cfg.get('publishedfileid'), 'characters': len(rows),
                'verdicts': dict(Counter(r['verdict'] for r in rows)), 'not_attachable': hidden,
-               'licenses': cfg['licenses'],
+               'links': bool(cfg.get('links')), 'licenses': cfg['licenses'],
                'built_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds'),
                'files': {k: sha256(v) for k, v in sorted(files.items())},
                'bytes': sum(len(v) for v in files.values()), 'archive_sha256': sha256(archive.read_bytes())}
@@ -360,17 +366,24 @@ def main():
     ap.add_argument('--output', type=Path, help='构建目录（必须是新的）')
     ap.add_argument('--only-written', action='store_true', help='和 --install 一起用：只放 written')
     ap.add_argument('--game-root', type=Path, help='EU5 安装目录，和 --check 一起用')
+    ap.add_argument('--links', choices=('on', 'off'), help='和 --check、--install 一起用：临时开关超链接；正式构建改 project.json 的 links')
     a = ap.parse_args()
     cfg = load_config(ROOT)
     if a.only_written:
         if not a.install:
             ap.error('--only-written 只用于 --install；正式构建改 project.json 的 only_written')
         cfg['only_written'] = True
+    if a.links:
+        if not (a.install or a.check):
+            ap.error('--links 只用于 --check、--install；正式构建改 project.json 的 links')
+        cfg['links'] = a.links == 'on'
     if a.check:
         rows, hidden = _rows(ROOT, cfg)
         payload(ROOT, cfg, rows)
         out = {'ok': True, 'version': cfg['version'], 'characters': len(rows),
-               'verdicts': dict(Counter(r['verdict'] for r in rows)), 'not_attachable': hidden}
+               'verdicts': dict(Counter(r['verdict'] for r in rows)), 'not_attachable': hidden,
+               'links': bool(cfg.get('links')),
+               'linked_bios': sum(r['_text']['en'] != r['en'] or r['_text']['zh'] != r['zh'] for r in rows)}
         out['page_count_mismatch'] = page_counts(ROOT, len(rows))
         if a.game_root:
             out['game'] = check_game(cfg, a.game_root)

@@ -114,6 +114,29 @@ class TestBuild(Fixture):
             with self.assertRaises(ValueError):
                 build.load_rows(self.root)
 
+    def test_links_use_rich_text_only_when_on(self):
+        en = 'Son of Edward II, king of England.'
+        zh = '爱德华二世之子，英格兰国王。'
+        en_rich = ("Son of #TOOLTIP:CHARACTER,[GetCharacter('eng_edward_ii').GetID],X #L Edward II#!#!, king of "
+                   "[GetCountry('ENG').GetName].")
+        zh_rich = "#TOOLTIP:CHARACTER,[GetCharacter('eng_edward_ii').GetID],X #L 爱德华二世#!#!之子，[ShowLocationName('england')]国王。"
+        self.write_rows([{**ROWS[0], 'en': en, 'zh': zh, 'en_rich': en_rich, 'zh_rich': zh_rich}])
+        cfg = build.load_config(self.root)
+        rows, _ = build.load_rows(self.root)
+        self.assertEqual(rows[0]['_text'], {'en': en, 'zh': zh})
+        rows, _ = build.load_rows(self.root, links=True)
+        en_loc = build.payload(self.root, cfg, rows)['in_game/localization/english/cb_character_bios_l_english.yml']
+        self.assertIn(en_rich.encode('utf-8'), en_loc)
+        # 链接改了正文、链接写法不认识、开了链接却没有 *_rich，都要拦下
+        for bad in ({'en_rich': en_rich.replace('Edward II#!', 'Edward the Second#!')},
+                    {'en_rich': en_rich.replace(', king', ' king')},
+                    {'en_rich': en_rich.replace('GetName', 'GetLongName')},
+                    {'zh_rich': zh_rich.replace("[ShowLocationName('england')]", '[ShowLocationName("england")]')},
+                    {'zh_rich': None}):
+            self.write_rows([{**ROWS[0], 'en': en, 'zh': zh, 'en_rich': en_rich, 'zh_rich': zh_rich, **bad}])
+            with self.assertRaises(ValueError, msg=bad):
+                build.load_rows(self.root, links=True)
+
     def test_install_replaces_only_own_copy(self):
         out = self.tmp / 'dist' / 'r'
         build.build(self.root, out)
