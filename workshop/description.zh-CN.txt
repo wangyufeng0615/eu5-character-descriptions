@@ -29,6 +29,9 @@
 
 如果发现错误，欢迎留言，我会持续维护更新这个 mod！当前尚未覆盖的人物，有些是因为 EU5 游戏代码的问题，不太好展示，我会持续完善，直到全部覆盖。
 
+[h2]QQ 群[/h2]
+欢迎加入 QQ 群 [b]518622967[/b]，反馈问题、提出建议，一起共建这几个 MOD！
+
 [h2]源码与下载[/h2]
 GitHub：[url=https://github.com/wangyufeng0615/eu5-character-descriptions]github.com/wangyufeng0615/eu5-character-descriptions[/url]
 
