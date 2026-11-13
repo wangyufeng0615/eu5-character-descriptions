@@ -1,59 +1,51 @@
 [h1]A biography for every historical character[/h1]
 [img]https://images.steamusercontent.com/ugc/10300716693799460515/2B2DD8B3A388ED947512F400327F3F5E7646FBCB/[/img]
 
-Vanilla EU5 has a great many real historical characters and rich family trees, but very few character descriptions.
+Vanilla EU5 has a great many real historical characters and full family trees, but very few character descriptions. This mod adds English and Chinese biographies to [b]7,789[/b] real historical characters, nearly all of those in the game. Hover over a character to read it. Biographies draw mainly on Wikipedia in English and the local language; when little is known, they stay short rather than make things up.
 
-This mod adds English and Chinese biographies to [b]7,789[/b] real historical characters, nearly all of those in the game. Hover over a character to read it.
+[list]
+[*]English and Chinese
+[*]Hover the people, places and countries named in a biography to open their own tooltips
+[*]Can be added to an existing save; Ironman and achievement compatible
+[/list]
 
-For every character, famous or obscure, I gathered sources, mainly Wikipedia in English and the local language, and matched them to the game's character by family, dates and titles. Each biography tells the world the person lived in and what they are remembered for. When little is known about someone, the biography stays short; nothing is made up.
-
-About the use of AI: models such as GPT 6.1 Terra and DeepSeek Flash gathered the sources, then Claude Opus 5.5, one of the best models for writing, combined and polished them in the spirit of EU5. These are the best models available and it took a huge number of tokens, but I think it was worth it :)
+[h2]My other mods[/h2]
+[b]Europa Universalis V[/b]: best used all three together
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3830305546][b]Descriptions for Every Tile[/b][/url]: descriptions for all 28,316 tiles on the map
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838927963][b]Descriptions Expanded: Countries, Cultures, Dynasties & More[/b][/url]: over 7,000 descriptions for countries, cultures, dynasties, religions and more
+[/list]
+[b]Europa Universalis IV[/b]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833082096][b]Descriptions for Every Province and Great Project[/b][/url]: descriptions for all 3,272 land provinces and 139 great projects
+[/list]
 
 [h2]Some interesting characters[/h2]
 [list]
-[*][b]Trasak Paem[/b]: a royal gardener in Cambodia who guarded the king's cucumbers so well that he fatally speared the king himself when he came to test him at night, and was later chosen as king by a white elephant
-[*][b]Olga of Kiev[/b]: avenged her husband by burning the Drevlian capital with birds carrying burning sulphur
-[*][b]Qutb ud-Din Aibak[/b]: a boy sold in the slave market of Nishapur who went on to found the Delhi Sultanate, and died when his saddle pierced his ribs in a polo match
-[*][b]Charlemagne[/b]: the caliph Harun al-Rashid sent him an elephant named Abul-Abbas
+[*][b]Trasak Paem[/b]: a Cambodian royal gardener who fatally speared the king when he came to test him at night, and was later chosen as king by a white elephant
+[*][b]Olga of Kiev[/b]: burned her husband's killers' capital with birds carrying burning sulphur
+[*][b]Qutb ud-Din Aibak[/b]: a boy sold in a slave market who founded the Delhi Sultanate and died falling from his horse at polo
 [*][b]Valdemar II of Denmark[/b]: legend says the Danish flag fell from the sky at his victory at Lindanise
 [*]And Constantine the Great, Zheng He, Wang Yangming, Napoleon…
 [/list]
 
-[h2]Features[/h2]
-[list]
-[*]English + Chinese
-[*]Hover the people, places and countries named in a biography to open their own tooltips
-[*]Only adds text; no effect on other features or game performance
-[*]Can be added to an existing save
-[*]Ironman and achievement compatible
-[/list]
+[h2]Compatibility[/h2]
+Checked file by file against the 60 most-subscribed EU5 mods; no conflicts. Mods that add characters (such as 1444 – The Dawn of Discovery) work, but their new characters have no biography.
 
-If you find a mistake, please leave a comment. I'll keep maintaining and updating this mod! Some characters aren't covered yet because of how EU5's code creates them, which makes them hard to show. I'll keep working on it until every one is covered.
-
-[h2]Source and downloads[/h2]
-[url=https://github.com/wangyufeng0615/eu5-character-descriptions]github.com/wangyufeng0615/eu5-character-descriptions[/url]
-
-[h2]My other mods[/h2]
-[list]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3830305546][b]Descriptions for Every Tile[/b][/url] (Europa Universalis V): descriptions for all 28,316 tiles on the EU5 map. Achievement compatible, 2,000+ subscribers. [b]Highly recommended together with this mod![/b]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833082096][b]Descriptions for Every Province[/b][/url] (Europa Universalis IV): descriptions for all 3,272 land provinces, from the 1444 start to 1821.
-[/list]
+[h2]Feedback[/h2]
+If you find a mistake, please leave a comment and I'll fix it. A few characters can't be shown yet because of how the game creates them; I'll keep working on it.
+Source and downloads: [url=https://github.com/wangyufeng0615/eu5-character-descriptions]GitHub[/url]
 
 [h2]Update history[/h2]
 [list]
-[*]1.0.8: Corrected Guillaume III Roger's place among his brothers, the wording of John V Palaiologos's co-emperorship, and the life of John V's elder sister Maria-Irene. Based on player feedback.
-[*]1.0.7: Biographies now contain links: hover a person, place, country, dynasty, culture or religion mentioned in a biography to open its own tooltip, including ancestors who died before 1337. The biography now appears in the tooltip right away instead of after a short delay.
-[*]1.0.6: Mostly Chinese text: a second pass made names consistent, covering short forms and family members missed in 1.0.5, with one spelling per family and place names inside names matching the game's own; also corrected Margaret of Lusignan's marriage year (both languages).
-[*]1.0.5: Chinese text only: each person is now named consistently across all Chinese biographies (over a thousand entries standardized), and stray traditional characters were converted to simplified Chinese.
-[*]1.0.4: Biographies are now split into two or three paragraphs and are about 15% shorter, so they are easier to read in the tooltip; every rewritten entry was checked against the previous text, and a number of small errors were corrected along the way.
-[*]1.0.3: Long biographies now scroll inside the tooltip, so it no longer runs off the screen.
-[*]1.0.2: Researched 208 rulers again, turning 105 short or missing entries into full biographies; event characters such as Wang Yangming now show a biography; fixed errors logged when hovering characters.
-[*]1.0.1: Rewrote the biographies of 663 rulers, heirs and regents alive at the 1337 start.
-[*]1.0.0: First release.
+[*]1.0.8: Corrected the biographies of Guillaume III Roger, John V Palaiologos and his elder sister Maria-Irene. Based on player feedback.
+[*]1.0.7: Hover the people, places, countries and more named in a biography to open their tooltips; biographies now appear right away.
+[*]1.0.6: Chinese names made consistent again; corrected Margaret of Lusignan's marriage year.
 [/list]
+Earlier versions: [url=https://github.com/wangyufeng0615/eu5-character-descriptions/blob/main/CHANGELOG.md]full changelog[/url].
 
 [h2]Thanks[/h2]
-Thanks to these players for pointing out problems and suggesting improvements; all of the changes below have been released:
+Thanks to these players for pointing out problems; all the fixes have been released:
 [list]
-[*][url=https://steamcommunity.com/profiles/76561198344948094]@Tricolore Royal[/url] (Workshop): pointed out that Guillaume III Roger was called the elder brother of Gregory XI, that a line about John V's co-emperorship was hard to follow in Chinese, and that John V's elder sister Maria was called his younger sister and merged with another Maria (fixed in 1.0.8)
+[*][url=https://steamcommunity.com/profiles/76561198344948094]@Tricolore Royal[/url] (Workshop): found errors in the biographies of Guillaume III Roger, John V and his sister Maria (1.0.8)
 [/list]
