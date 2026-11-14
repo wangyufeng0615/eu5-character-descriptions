@@ -3,6 +3,12 @@
 
 原版 EU5 有大量真实历史人物和完整的家族树，却很少有人物介绍。此 MOD 为 [b]7,789[/b] 位真实历史人物（几乎是游戏里的全部）补上中英文生平，鼠标悬停人物即可看到。生平以英文和当地语言的维基百科为主，资料少的宁可写短，不编造。
 
+⭐ [b]强烈推荐同时订阅另外两个 MOD[/b]，三个合起来覆盖地图、人物和国家。
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3830305546][b]所有地块的描述[/b][/url]：地图上全部 28,316 个地块的介绍
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838927963][b]描述扩展：国家、文化、王朝及更多[/b][/url]：国家、文化、王朝、宗教等 7,000 多条介绍
+[/list]
+
 [list]
 [*]支持英文、中文
 [*]生平里提到的人物、地点、国家可以悬停，打开它们自己的浮窗
@@ -10,11 +16,6 @@
 [/list]
 
 [h2]我的其他 MOD[/h2]
-[b]欧陆风云5[/b]：建议三个一起订阅
-[list]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3830305546][b]所有地块的描述[/b][/url]：地图上全部 28,316 个地块的介绍
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838927963][b]描述扩展：国家、文化、王朝及更多[/b][/url]：国家、文化、王朝、宗教等 7,000 多条介绍
-[/list]
 [b]欧陆风云4[/b]
 [list]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833082096][b]所有省份和伟大工程的描述[/b][/url]：3,272 个陆地省份和 139 座伟大工程的介绍
