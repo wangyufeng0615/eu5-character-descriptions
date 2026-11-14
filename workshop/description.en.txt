@@ -31,7 +31,6 @@ Vanilla EU5 has a great many real historical characters and full family trees, b
 
 [h2]Compatibility[/h2]
 [b]Compatible with[/b]: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3692202776]Community Mod Framework (CMF)[/url]
-Checked file by file against the 60 most-subscribed EU5 mods; no conflicts. Mods that add characters (such as 1444 – The Dawn of Discovery) work, but their new characters have no biography.
 
 [h2]Feedback[/h2]
 If you find a mistake, please leave a comment and I'll fix it. A few characters can't be shown yet because of how the game creates them; I'll keep working on it.
