@@ -30,6 +30,7 @@
 [/list]
 
 [h2]兼容性[/h2]
+[b]已确认兼容[/b]：[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3692202776]Community Mod Framework（CMF）[/url]
 已与订阅数前 60 的 EU5 模组逐个比对文件，没有冲突。新增人物的模组（如 1444 – The Dawn of Discovery）可以一起用，它们新增的人物没有生平。
 
 [h2]反馈与交流[/h2]
