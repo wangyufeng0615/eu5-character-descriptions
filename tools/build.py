@@ -199,11 +199,6 @@ def loc_line(key, text):
     return f' {key}: "{text}"\n'
 
 
-# 游戏另外 9 种官方语言没有译文时，按文本键挑介绍的地方会把键名原样显示出来；这些语言先放一份英文（2026-11-14 用户定）。
-# 只复制新增的键：replace/ 里是原版已有的键，各语言原版自有译文，不覆盖。
-FALLBACK_LANGS = ('braz_por', 'french', 'german', 'japanese', 'korean', 'polish', 'russian', 'spanish', 'turkish')
-
-
 def payload(root, cfg, rows):
     """模组里每个文件的内容：{相对路径: bytes}。构建和核对都用它，保证两边一致。"""
     files = {}
@@ -223,10 +218,6 @@ def payload(root, cfg, rows):
         body = f'l_{lang}:\n' + loc_line('cb_bio_none', '') + ''.join(loc_line(loc_key(r), loc_text(r['_text'][key]))
                                                                       for r in rows)
         files[f'in_game/localization/{lang}/cb_character_bios_l_{lang}.yml'] = body.encode('utf-8-sig')
-    en_body = files['in_game/localization/english/cb_character_bios_l_english.yml'].decode('utf-8-sig')
-    for lang in FALLBACK_LANGS:
-        files[f'in_game/localization/{lang}/cb_character_bios_l_{lang}.yml'] = \
-            en_body.replace('l_english:', f'l_{lang}:', 1).encode('utf-8-sig')
     for name in LICENSE_FILES:
         files[name] = project_file(root, name).read_bytes()
     for name, src in PLAYER_DOCS.items():
