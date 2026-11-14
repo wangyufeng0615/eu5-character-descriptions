@@ -104,6 +104,15 @@ class TestBuild(Fixture):
         self.assertIn(' cb_bio_eng_edward_iii: "First part.\\n\\nSecond part."\n', en)
         self.assertIn(' cb_bio_eng_edward_iii: "第一段。\\n\\n第二段。"\n', zh)
 
+    def test_other_languages_get_english(self):
+        rows, _ = build.load_rows(self.root)
+        files = build.payload(self.root, build.load_config(self.root), rows)
+        en = files['in_game/localization/english/cb_character_bios_l_english.yml'].decode('utf-8-sig')
+        for lang in build.FALLBACK_LANGS:
+            other = files[f'in_game/localization/{lang}/cb_character_bios_l_{lang}.yml'].decode('utf-8-sig')
+            self.assertTrue(other.startswith(f'l_{lang}:\n'))
+            self.assertEqual(other.split('\n', 1)[1], en.split('\n', 1)[1])
+
     def test_only_written(self):
         rows, hidden = build.load_rows(self.root, only_written=True)
         self.assertEqual([r['id'] for r in rows], ['eng_edward_iii'])
