@@ -4,7 +4,7 @@
 Vanilla EU5 has a great many real historical characters and full family trees, but very few character descriptions. This mod adds English and Chinese biographies to [b]7,789[/b] real historical characters, nearly all of those in the game. Hover over a character to read it. Biographies draw mainly on Wikipedia in English and the local language; when little is known, they stay short rather than make things up.
 
 [list]
-[*]English and Chinese; other game languages show the English text
+[*]English and Chinese
 [*]Hover the people, places and countries named in a biography to open their own tooltips
 [*]Can be added to an existing save; Ironman and achievement compatible
 [/list]
@@ -38,6 +38,7 @@ Source and downloads: [url=https://github.com/wangyufeng0615/eu5-character-descr
 
 [h2]Update history[/h2]
 [list]
+[*]1.0.10: Removed the English copies for other game languages added in 1.0.9; the download is back to its earlier size.
 [*]1.0.9: Other game languages (French, German, Spanish and more) now show the English biographies. Based on player feedback.
 [*]1.0.8: Corrected the biographies of Guillaume III Roger, John V Palaiologos and his elder sister Maria-Irene. Based on player feedback.
 [*]1.0.7: Hover the people, places, countries and more named in a biography to open their tooltips; biographies now appear right away.
