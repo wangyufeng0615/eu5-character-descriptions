@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.10 — 2026-11-14
+
+- Removed the English copies for other game languages added in 1.0.9; the download is back to its earlier size.
+
 ## 1.0.9 — 2026-11-14
 
 - Other game languages (French, German, Spanish and more) now show the English biographies. Based on player feedback.
