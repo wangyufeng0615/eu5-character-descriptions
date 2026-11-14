@@ -41,8 +41,14 @@ Source and downloads: [url=https://github.com/wangyufeng0615/eu5-character-descr
 [*]1.0.8: Corrected the biographies of Guillaume III Roger, John V Palaiologos and his elder sister Maria-Irene. Based on player feedback.
 [*]1.0.7: Hover the people, places, countries and more named in a biography to open their tooltips; biographies now appear right away.
 [*]1.0.6: Chinese names made consistent again; corrected Margaret of Lusignan's marriage year.
+[*]1.0.5: Each person now has one consistent Chinese name across all biographies; stray traditional characters converted.
+[*]1.0.4: Biographies split into two or three paragraphs and tightened by about 15%, with small errors corrected.
+[*]1.0.3: Long biographies now scroll inside the tooltip instead of running off the screen.
+[*]1.0.2: Researched 208 rulers again and filled in 105 short or missing biographies; event characters such as Wang Yangming now show one; fixed hover errors.
+[*]1.0.1: Rewrote the biographies of 663 key rulers, heirs and regents of the 1337 start.
+[*]1.0.0: First public release.
 [/list]
-Earlier versions: [url=https://github.com/wangyufeng0615/eu5-character-descriptions/blob/main/CHANGELOG.md]full changelog[/url].
+Details for each version: [url=https://github.com/wangyufeng0615/eu5-character-descriptions/blob/main/CHANGELOG.md]full changelog[/url].
 
 [h2]Thanks[/h2]
 Thanks to these players for pointing out problems; all the fixes have been released:
