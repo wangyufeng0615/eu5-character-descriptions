@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.11 — 2026-11-21
+
+- Editorial quality pass across 35 notable historical character biographies in English and Simplified Chinese: unified cross-mod terminology, tightened phrasing, and fixed historical and EN-ZH parity details.
+
 ## 1.0.10 — 2026-11-14
 
 - Removed the English copies for other game languages added in 1.0.9; the download is back to its earlier size.
