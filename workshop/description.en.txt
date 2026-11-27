@@ -32,7 +32,7 @@ Or subscribe to all three at once from [url=https://steamcommunity.com/sharedfil
 [/list]
 
 [h2]Compatibility[/h2]
-[b]Compatible with[/b]: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3692202776]Community Mod Framework (CMF)[/url]
+[b]Compatible with[/b]: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3692202776]Community Mod Framework (CMF)[/url]; [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3601047146]Glorp UI[/url]
 
 [h2]Feedback[/h2]
 If you find a mistake, please leave a comment and I'll fix it. A few characters can't be shown yet because of how the game creates them; I'll keep working on it.
