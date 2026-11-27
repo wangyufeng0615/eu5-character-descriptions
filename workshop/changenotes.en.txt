@@ -1,2 +1,2 @@
-1.0.11
-Editorial quality pass across 35 notable historical character biographies in English and Simplified Chinese: unified cross-mod terminology, tightened phrasing, and fixed historical and EN-ZH parity details.
+1.0.12
+Updated for game version 1.4.9: from 1.4.9 Šibenik belongs to Venice at the 1337 start and the game shows it under its Venetian name Sebenico, so the four biographies that mention it no longer link it.
